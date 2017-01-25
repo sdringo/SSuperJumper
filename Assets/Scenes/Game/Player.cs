@@ -10,7 +10,7 @@ public class Player : Entity
         DOWN,
     }
 
-    public Action onScroll;
+    public Action<float> onScroll;
     public Action onGameOver;
 
     public float jumpSpeed = 3.3f;
@@ -53,9 +53,8 @@ public class Player : Entity
             transform.Translate( _velocity * Time.deltaTime );
 
             if( transform.position.y > _maxHeight ) {
-                Distance = transform.position.y - _maxHeight;
+                onScroll( transform.position.y - _maxHeight );
                 transform.position = new Vector3( 0, _maxHeight, 0 );
-                onScroll();
             }
         }
 
@@ -81,6 +80,11 @@ public class Player : Entity
         }
     }
 
+    public void onApplyItem( BaseObject item )
+    {
+        item.remove();
+    }
+
     public void onTouchDown()
     {
         if( _status == Status.IDLE || _status == Status.DOWN ) {
@@ -96,10 +100,5 @@ public class Player : Entity
             _power = Vector3.zero;
             _charged = false;
         }
-    }
-
-    public void onTouch()
-    {
-        
     }
 }
