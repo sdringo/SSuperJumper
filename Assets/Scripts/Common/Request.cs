@@ -17,7 +17,7 @@ public class Request
         return request;
     }
 
-    public static Request create(string method, object param)
+    public static Request create( string method, object param )
     {
         Request request = new Request();
         request.methodName = method;
@@ -26,24 +26,24 @@ public class Request
         return request;
     }
 
-	public static Request create( string method, GameObject callbackObject, string callbackMethod )
-	{
-		Request request = new Request();
-		request.methodName = method;
-		request.callbackObject = callbackObject;
-		request.callbackMethod = callbackMethod;
-		
-		return request;
-	}
-	
-	public static Request create(string method, object param, GameObject callbackObject, string callbackMethod)
-	{
-		Request request = new Request();
-		request.methodName = method;
-		request.parameter = param;
-		request.callbackObject = callbackObject;
-		request.callbackMethod = callbackMethod;
-		
-		return request;
-	}
+    public static Request create( string method, GameObject callbackObject, string callbackMethod )
+    {
+        Request request = new Request();
+        request.methodName = method;
+        request.callbackObject = callbackObject;
+        request.callbackMethod = callbackMethod;
+
+        return request;
+    }
+
+    public static Request create( string method, object param, GameObject callbackObject, string callbackMethod )
+    {
+        Request request = new Request();
+        request.methodName = method;
+        request.parameter = param;
+        request.callbackObject = callbackObject;
+        request.callbackMethod = callbackMethod;
+
+        return request;
+    }
 }

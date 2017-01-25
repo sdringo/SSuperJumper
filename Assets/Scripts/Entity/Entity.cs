@@ -2,6 +2,8 @@
 
 public class Entity : MonoBehaviour, IEntity
 {
+    protected Bounds bounds;
+
     #region
     protected virtual void Awake()
     {
@@ -72,6 +74,13 @@ public class Entity : MonoBehaviour, IEntity
             return;
 
         child.transform.parent = gameObject.transform;
+    }
+
+    public void detach( GameObject go )
+    {
+        Transform child = transform.FindChild( go.name );
+        if( child )
+            child.parent = null;
     }
 
     public void detach( string name )
