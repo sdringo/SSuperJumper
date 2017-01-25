@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class GameController : Entity
 {
-    public float scrollSpeed = 0.01f;
-
     private GameObject bg1 = null;
     private GameObject bg2 = null;
     private Bounds bgBounds;
 
-    private Bounds scrollBounds;
-    private bool scroll = false;
-
     private Player player = null;
+    private List<Object> objects = new List<Object>();
+
+    private float distance = 0.0f;
 
     public override void initialize()
     {
@@ -28,22 +26,8 @@ public class GameController : Entity
         player.ready();
         player.onScroll = onScroll;
         player.onGameOver = onGameOver;
-    }
 
-    public override void update()
-    {
-        base.update();
-
-        if( scroll ) {
-            bg1.transform.Translate( 0, -scrollSpeed, 0 );
-            bg2.transform.Translate( 0, -scrollSpeed, 0 );
-
-            if( bg1.transform.position.y < -bgBounds.size.y )
-                bg1.transform.Translate( 0, bgBounds.size.y * 2, 0 );
-
-            if( bg2.transform.position.y < -bgBounds.size.y )
-                bg2.transform.Translate( 0, bgBounds.size.y * 2, 0 );
-        }
+        distance = 0.0f;
     }
 
     public void onTouchDown()
@@ -58,9 +42,22 @@ public class GameController : Entity
             player.onTouchUp();
     }
 
-    public void onScroll( bool scroll )
+    public void onScroll()
     {
-        this.scroll = scroll;
+        float moved = player.Distance;
+
+        bg1.transform.Translate( 0, -moved * 0.1f, 0 );
+        bg2.transform.Translate( 0, -moved * 0.1f, 0 );
+
+        if( bg1.transform.position.y < -bgBounds.size.y ) {
+            float offset = bgBounds.size.y + bg1.transform.position.y;
+            bg1.transform.position = new Vector3( 0, bgBounds.size.y * 2 + offset, 0 );
+        }
+
+        if( bg2.transform.position.y < -bgBounds.size.y ) {
+            float offset = bgBounds.size.y + bg2.transform.position.y;
+            bg2.transform.position = new Vector3( 0, bgBounds.size.y * 2 + offset, 0 );
+        }
     }
 
     public void onGameOver()
@@ -73,5 +70,7 @@ public class GameController : Entity
 
         if( bg2 )
             bg2.transform.position = new Vector3( 0, bgBounds.size.y, 0 );
+
+        distance = 0.0f;
     }
 }

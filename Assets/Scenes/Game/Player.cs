@@ -6,14 +6,12 @@ public class Player : Entity
     public enum Status
     {
         IDLE,
-        IDLE_READY,
         JUMP,
-        JUMP_READY,
         DOWN,
     }
 
+    public Action onScroll;
     public Action onGameOver;
-    public Action<bool> onScroll;
 
     public float jumpSpeed = 3.3f;
     public float downSpeed = 1.5f;
@@ -25,6 +23,8 @@ public class Player : Entity
     private Status _status = Status.IDLE;
     private Vector3 _power = Vector3.zero;
     private Vector3 _velocity = Vector3.zero;
+
+    public float Distance { get; set; }
 
     private bool _charged = false;
 
@@ -46,15 +46,16 @@ public class Player : Entity
     {
         base.update();
 
-        if( _status != Status.IDLE && _status != Status.IDLE_READY ) {
+        if( _status != Status.IDLE ) {
             _velocity += Vector3.down * downSpeed * Time.deltaTime;
             _velocity.y = Mathf.Max( _velocity.y, minSpeed );
 
             transform.Translate( _velocity * Time.deltaTime );
 
             if( transform.position.y > _maxHeight ) {
+                Distance = transform.position.y - _maxHeight;
                 transform.position = new Vector3( 0, _maxHeight, 0 );
-                onScroll( true );
+                onScroll();
             }
         }
 
@@ -64,7 +65,6 @@ public class Player : Entity
         switch( _status ) {
             case Status.JUMP: {
                     if( _velocity.y < 0 ) {
-                        onScroll( false );
                         _status = Status.DOWN;
                     }
                 }
@@ -96,5 +96,10 @@ public class Player : Entity
             _power = Vector3.zero;
             _charged = false;
         }
+    }
+
+    public void onTouch()
+    {
+        
     }
 }
