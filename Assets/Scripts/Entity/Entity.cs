@@ -24,16 +24,6 @@ public class Entity : MonoBehaviour, IEntity
     {
         updateLate();
     }
-
-    protected virtual void OnEnable()
-    {
-        onEnter();
-    }
-
-    protected virtual void OnDisable()
-    {
-        onExit();
-    }
     #endregion
 
     #region
@@ -56,14 +46,6 @@ public class Entity : MonoBehaviour, IEntity
     }
 
     public virtual void updateLate()
-    {
-    }
-
-    public virtual void onEnter()
-    {
-    }
-
-    public virtual void onExit()
     {
     }
     #endregion

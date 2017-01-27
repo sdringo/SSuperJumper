@@ -38,14 +38,6 @@ public class Processor<T> : SingletonObject<T> where T : class
     {
         processRequest();
     }
-
-    public override void onEnter()
-    {
-    }
-
-    public override void onExit()
-    {
-    }
     #endregion
 
     #region Process Request

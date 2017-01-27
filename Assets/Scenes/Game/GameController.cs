@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class GameController : Entity
 {
     public float respwanDistance = 10.0f;
-    public Energy objectEnergy = null;
-    public Energy objectEnemy = null;
-    public Energy objectJump = null;
+    public EnergyObject objectEnergy = null;
+    public EnemyObject objectEnemy = null;
+    public JumpObject objectJump = null;
+
+    public static Bounds ScreenBounds { get; set; }
 
     private GameObject bg1 = null;
     private GameObject bg2 = null;
@@ -20,6 +22,11 @@ public class GameController : Entity
     public override void initialize()
     {
         base.initialize();
+
+        Vector3 size = Vector2.zero;
+        size.y = Camera.main.orthographicSize * 2.0f;
+        size.x = size.y * Screen.width / Screen.height;
+        ScreenBounds = new Bounds( Vector3.zero, size );
 
         bg1 = transform.GetChild( 0 ).gameObject;
         bg2 = transform.GetChild( 1 ).gameObject;
@@ -37,28 +44,6 @@ public class GameController : Entity
         respwarnPos.y = Camera.main.orthographicSize * 1.1f;
     }
 
-    public void onTouchDown()
-    {
-        if( player )
-            player.onTouchDown();
-    }
-
-    public void onTouchUp()
-    {
-        if( player )
-            player.onTouchUp();
-    }
-
-    public void onTouch()
-    {
-        RaycastHit2D hit = Physics2D.Raycast( player.transform.position, Vector2.zero );
-        if( hit.collider ) {
-            BaseObject item = hit.collider.GetComponent<BaseObject>();
-            if( item )
-                player.onApplyItem( item );
-        }
-    }
-
     public void onScroll( float distance )
     {
         score += distance;
@@ -67,7 +52,7 @@ public class GameController : Entity
         if( lastRespwan < current ) {
             lastRespwan = current;
 
-            BaseObject obj = Instantiate<Energy>( objectEnergy );
+            BaseObject obj = Instantiate<EnergyObject>( objectEnergy );
             obj.transform.Translate( respwarnPos );
             obj.onOutBounds = onOutBounds;
             player.onScroll += obj.onScroll;

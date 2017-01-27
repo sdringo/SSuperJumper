@@ -12,8 +12,4 @@ public interface IEntity
     void update();
 
     void updateLate();
-
-    void onEnter();
-
-    void onExit();
 }
