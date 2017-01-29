@@ -19,11 +19,10 @@ public class Player : Entity
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
     public float Distance { get; set; }
-    
+
     protected PlayerState prev = null;
     protected PlayerState curr = null;
 
-    
     private float _maxHeight = 0.0f;
 
     private bool touchBegan = false;
@@ -31,9 +30,17 @@ public class Player : Entity
     private float touchTime = 0.0f;
     private float holdThreshold = 0.3f;
 
-    public override void update()
+    public override void initialize()
     {
-        base.update();
+        base.initialize();
+
+        Animator ani = GetComponent<Animator>();
+        ani.SetTrigger( "Idle" );
+    }
+
+    public override void updateFixed()
+    {
+        base.updateFixed();
 
         processTouch();
 

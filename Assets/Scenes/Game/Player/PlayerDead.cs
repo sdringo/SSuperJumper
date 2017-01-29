@@ -8,6 +8,9 @@ public class PlayerDead : PlayerState
 
         owner.Gravity = Vector3.zero;
         owner.Velocity = Vector3.zero;
+
+        Animator ani = owner.GetComponent<Animator>();
+        ani.SetTrigger( "Dead" );
     }
 
     public override void onClick()

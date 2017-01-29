@@ -7,6 +7,9 @@ public class PlayerIdle : PlayerState
         base.onEnter( owner );
 
         owner.Gravity = Vector3.zero;
+
+        Animator ani = owner.GetComponent<Animator>();
+        ani.SetTrigger( "Idle" );
     }
 
     public override void onTouchEnd()

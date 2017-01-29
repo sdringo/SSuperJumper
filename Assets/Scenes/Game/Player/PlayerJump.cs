@@ -2,6 +2,14 @@
 
 public class PlayerJump : PlayerState
 {
+    public override void onEnter( Player owner )
+    {
+        base.onEnter( owner );
+
+        Animator ani = owner.GetComponent<Animator>();
+        ani.SetTrigger( "Jump" );
+    }
+
     public override void onUpdate( Player owner )
     {
         base.onUpdate( owner );
