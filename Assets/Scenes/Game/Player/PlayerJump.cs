@@ -8,6 +8,8 @@ public class PlayerJump : PlayerState
 
         Animator ani = owner.GetComponent<Animator>();
         ani.SetTrigger( "Jump" );
+
+        owner.Shield = false;
     }
 
     public override void onUpdate( Player owner )
@@ -18,9 +20,9 @@ public class PlayerJump : PlayerState
             owner.changeState( new PlayerDown() );
 
         if( owner.Shield ) {
-            owner.ShieldEN -= owner.ReqShield * Time.deltaTime;
-            owner.ShieldEN = Mathf.Max( 0, owner.ShieldEN );
-            if( 0 >= owner.ShieldEN ) {
+            owner.ENShield -= owner.ReqShield * Time.deltaTime;
+            owner.ENShield = Mathf.Max( 0, owner.ENShield );
+            if( 0 >= owner.ENShield ) {
                 owner.Shield = false;
 
                 Animator ani = owner.GetComponent<Animator>();
@@ -33,7 +35,7 @@ public class PlayerJump : PlayerState
     {
         base.onTouchBegan();
 
-        if( 0 < owner.ShieldEN ) {
+        if( 0 < owner.ENShield ) {
             owner.Shield = true;
 
             Animator ani = owner.GetComponent<Animator>();

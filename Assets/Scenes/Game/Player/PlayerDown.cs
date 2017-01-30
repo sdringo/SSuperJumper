@@ -18,16 +18,16 @@ public class PlayerDown : PlayerState
             owner.dead();
 
         if( charge ) {
-            owner.JumpEN -= owner.ReqJump * Time.deltaTime;
-            owner.JumpEN = Mathf.Max( 0, owner.JumpEN );
-            if( 0 >= owner.JumpEN )
+            owner.ENJump -= owner.ReqJump * Time.deltaTime;
+            owner.ENJump = Mathf.Max( 0, owner.ENJump );
+            if( 0 >= owner.ENJump )
                 owner.jump( power );
         }
     }
 
     public override void onTouchBegan()
     {
-        if( 0 < owner.JumpEN ) {
+        if( 0 < owner.ENJump ) {
             base.onTouchBegan();
 
             Animator ani = owner.GetComponent<Animator>();
@@ -40,7 +40,7 @@ public class PlayerDown : PlayerState
         if( charge ) {
             base.onTouchEnd();
 
-            owner.jump( power );
+            owner.jump( power * 1.2f );
         }   
     }
 }

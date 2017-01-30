@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -18,25 +19,42 @@ public class Player : Entity
     public float MinSpeed = -5.0f;
     public float ReqShield = 10;
     public float ReqJump = 10;
-    public float MaxEn = 100;
+    public float MaxEn = 1000;
 
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
-    public float Distance { get; set; }
 
+    public float Distance { get { return distance; } set { distance = value; setStatus(); } }
+    public float ENShield { get { return enShield; } set { enShield = value; setStatus(); } }
+    public float ENJump { get { return enJump; } set { enJump = value; setStatus(); } }
     public bool Shield { get; set; }
-    public float ShieldEN { get; set; }
-    public float JumpEN { get; set; }
 
     protected PlayerState prev = null;
     protected PlayerState curr = null;
 
     private float _maxHeight = 0.0f;
+    private float distance = 0.0f;
+    private float enShield = 0.0f;
+    private float enJump = 0.0f;
 
     private bool touchBegan = false;
     private bool touchEnd = false;
     private float touchTime = 0.0f;
     private float holdThreshold = 0.25f;
+
+    private Image imgShield = null;
+    private Image imgJump = null;
+
+    public override void initialize()
+    {
+        base.initialize();
+
+        imgShield = GameObject.Find( "bar_shield" ).GetComponent<Image>();
+        imgJump = GameObject.Find( "bar_jump" ).GetComponent<Image>();
+
+        ENShield = 300;
+        ENJump = 300;
+    }
 
     public override void updateFixed()
     {
@@ -85,6 +103,15 @@ public class Player : Entity
         }
     }
 
+    private void setStatus()
+    {
+        if( imgShield )
+            imgShield.fillAmount = enShield / MaxEn;
+
+        if( imgJump )
+            imgJump.fillAmount = enJump / MaxEn;
+    }
+
     public void changeState( PlayerState state )
     {
         if( null == state )
@@ -104,8 +131,8 @@ public class Player : Entity
 
     public void ready()
     {
-        ShieldEN = 100;
-        JumpEN = 100;
+        ENShield = 300;
+        ENJump = 300;
 
         _maxHeight = GameController.ScreenBounds.max.y * 0.2f;
 

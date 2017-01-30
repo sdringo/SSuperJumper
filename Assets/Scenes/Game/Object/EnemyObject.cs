@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyObject : BaseObject
 {
-    public override void hit( Player player )
+    void OnTriggerEnter2D( Collider2D other )
     {
-        if( player.Shield )
-            onOutBounds( this );
-        else
-            player.onGameOver();
+        if( other.name.Equals( "Player" ) ) {
+            Player player = other.GetComponent<Player>();
+            if( player.Shield )
+                onOutBounds( this );
+            else
+                player.dead();
+        }
     }
 }

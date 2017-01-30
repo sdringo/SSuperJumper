@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameController : Entity
 {
-    public float respwanDistance = 10.0f;
-    public EnergyObject objectEnergy = null;
-    public EnemyObject objectEnemy = null;
-    public JumpObject objectJump = null;
-
     public static Bounds ScreenBounds { get; set; }
+
+    public float respwanDistance = 10.0f;
+    public List<BaseObject> respwans = new List<BaseObject>();
 
     private GameObject bg1 = null;
     private GameObject bg2 = null;
@@ -16,6 +14,8 @@ public class GameController : Entity
 
     private Player player = null;
     private float score = 0.0f;
+
+    private List<BaseObject> objects = new List<BaseObject>();
     private int lastRespwan = 0;
     private Vector3 respwarnPos = Vector3.zero;
 
@@ -34,7 +34,7 @@ public class GameController : Entity
         bgBounds = bg1.GetComponent<SpriteRenderer>().bounds;
         bg2.transform.Translate( 0, bgBounds.size.y, 0 );
 
-        player = GameObject.FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();
         player.ready();
         player.onScroll = onScroll;
         player.onGameOver = onGameOver;
@@ -44,32 +44,31 @@ public class GameController : Entity
         respwarnPos.y = Camera.main.orthographicSize * 1.1f;
     }
 
-    public Color applyHue( Color input, float hue )
+    public override void update()
     {
-        Vector3 color = new Vector3( input.r, input.g, input.b );
-        float angle = hue * Mathf.Deg2Rad;
-        Vector3 k = new Vector3( 0.57735f, 0.57735f, 0.57735f );
-        float cosAngle = Mathf.Cos( angle );
+        base.update();
 
-        Vector3 result = color * cosAngle + Vector3.Cross( k, color ) * Mathf.Sin( angle ) + k * Vector3.Dot( k, color ) * ( 1 - cosAngle );
-
-        return new Color( result.x, result.y, result.z );
+        if( Input.GetKey( KeyCode.Escape ) ) {
+            Application.Quit();
+        }
     }
 
     public void onScroll( float distance )
     {
         score += distance;
 
-        SpriteRenderer sprite = bg1.GetComponent<SpriteRenderer>();
-
-                int current = (int)( score / respwanDistance );
+        int current = (int)( score / respwanDistance );
         if( lastRespwan < current ) {
             lastRespwan = current;
 
-            BaseObject obj = Instantiate<EnergyObject>( objectEnergy );
+            int index = Random.Range( 0, objects.Count );
+
+            BaseObject obj = Instantiate<BaseObject>( respwans[index] );
             obj.transform.Translate( respwarnPos );
             obj.onOutBounds = onOutBounds;
             player.onScroll += obj.onScroll;
+
+            objects.Add( obj );
         }
 
         //bg1.transform.Translate( 0, -distance * 0.1f, 0 );
@@ -97,6 +96,15 @@ public class GameController : Entity
         if( bg2 )
             bg2.transform.position = new Vector3( 0, bgBounds.size.y, 0 );
 
+        foreach( BaseObject obj in objects ) {
+            if( player )
+                player.onScroll -= obj.onScroll;
+
+            GameObject.DestroyImmediate( obj.gameObject );
+        }
+
+        objects.Clear();
+
         score = 0.0f;
     }
 
@@ -104,6 +112,8 @@ public class GameController : Entity
     {
         if( player )
             player.onScroll -= obj.onScroll;
+
+        objects.Remove( obj );
 
         GameObject.DestroyImmediate( obj.gameObject );
     }

@@ -8,7 +8,7 @@ public class JumpObject : BaseObject
 
     public override void hit( Player player )
     {
-        player.JumpEN += Amout;
+        player.ENJump += Amout;
 
         onOutBounds( this );
     }
