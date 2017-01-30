@@ -27,8 +27,8 @@ public class BaseObject : Entity
             onOutBounds( this );
     }
 
-    public void remove()
+    public virtual void hit( Player player )
     {
-        onOutBounds( this );
+        
     }
 }

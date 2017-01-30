@@ -16,9 +16,17 @@ public class Player : Entity
     public float JumpSpeed = 3.3f;
     public float DownSpeed = 1.5f;
     public float MinSpeed = -5.0f;
+    public float ReqShield = 10;
+    public float ReqJump = 10;
+    public float MaxEn = 100;
+
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
     public float Distance { get; set; }
+
+    public bool Shield { get; set; }
+    public float ShieldEN { get; set; }
+    public float JumpEN { get; set; }
 
     protected PlayerState prev = null;
     protected PlayerState curr = null;
@@ -28,15 +36,7 @@ public class Player : Entity
     private bool touchBegan = false;
     private bool touchEnd = false;
     private float touchTime = 0.0f;
-    private float holdThreshold = 0.3f;
-
-    public override void initialize()
-    {
-        base.initialize();
-
-        Animator ani = GetComponent<Animator>();
-        ani.SetTrigger( "Idle" );
-    }
+    private float holdThreshold = 0.25f;
 
     public override void updateFixed()
     {
@@ -104,6 +104,9 @@ public class Player : Entity
 
     public void ready()
     {
+        ShieldEN = 100;
+        JumpEN = 100;
+
         _maxHeight = GameController.ScreenBounds.max.y * 0.2f;
 
         transform.position = new Vector3( 0, GameController.ScreenBounds.min.y * 0.7f, 0 );
@@ -122,16 +125,6 @@ public class Player : Entity
     public void dead()
     {
         changeState( new PlayerDead() );
-    }
-
-    public void checkItem()
-    {
-        RaycastHit2D hit = Physics2D.Raycast( transform.position, Vector2.zero );
-        if( hit.collider ) {
-            BaseObject item = hit.collider.GetComponent<BaseObject>();
-            if( item )
-                item.remove();
-        }
     }
 
     public void onTouchBegan()

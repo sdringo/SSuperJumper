@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class JumpObject : BaseObject
 {
-    
+    public float Amout = 10;
+
+    public override void hit( Player player )
+    {
+        player.JumpEN += Amout;
+
+        onOutBounds( this );
+    }
 }

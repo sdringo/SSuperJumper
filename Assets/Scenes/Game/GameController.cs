@@ -44,11 +44,25 @@ public class GameController : Entity
         respwarnPos.y = Camera.main.orthographicSize * 1.1f;
     }
 
+    public Color applyHue( Color input, float hue )
+    {
+        Vector3 color = new Vector3( input.r, input.g, input.b );
+        float angle = hue * Mathf.Deg2Rad;
+        Vector3 k = new Vector3( 0.57735f, 0.57735f, 0.57735f );
+        float cosAngle = Mathf.Cos( angle );
+
+        Vector3 result = color * cosAngle + Vector3.Cross( k, color ) * Mathf.Sin( angle ) + k * Vector3.Dot( k, color ) * ( 1 - cosAngle );
+
+        return new Color( result.x, result.y, result.z );
+    }
+
     public void onScroll( float distance )
     {
         score += distance;
 
-        int current = (int)( score / respwanDistance );
+        SpriteRenderer sprite = bg1.GetComponent<SpriteRenderer>();
+
+                int current = (int)( score / respwanDistance );
         if( lastRespwan < current ) {
             lastRespwan = current;
 
@@ -58,8 +72,8 @@ public class GameController : Entity
             player.onScroll += obj.onScroll;
         }
 
-        bg1.transform.Translate( 0, -distance * 0.1f, 0 );
-        bg2.transform.Translate( 0, -distance * 0.1f, 0 );
+        //bg1.transform.Translate( 0, -distance * 0.1f, 0 );
+        //bg2.transform.Translate( 0, -distance * 0.1f, 0 );
 
         if( bg1.transform.position.y < -bgBounds.size.y ) {
             float offset = bgBounds.size.y + bg1.transform.position.y;

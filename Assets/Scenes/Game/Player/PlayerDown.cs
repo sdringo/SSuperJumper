@@ -16,12 +16,31 @@ public class PlayerDown : PlayerState
 
         if( owner.transform.position.y < GameController.ScreenBounds.min.y )
             owner.dead();
+
+        if( charge ) {
+            owner.JumpEN -= owner.ReqJump * Time.deltaTime;
+            owner.JumpEN = Mathf.Max( 0, owner.JumpEN );
+            if( 0 >= owner.JumpEN )
+                owner.jump( power );
+        }
+    }
+
+    public override void onTouchBegan()
+    {
+        if( 0 < owner.JumpEN ) {
+            base.onTouchBegan();
+
+            Animator ani = owner.GetComponent<Animator>();
+            ani.SetTrigger( "Charge" );
+        }
     }
 
     public override void onTouchEnd()
     {
-        base.onTouchEnd();
+        if( charge ) {
+            base.onTouchEnd();
 
-        owner.jump( power );
+            owner.jump( power );
+        }   
     }
 }
