@@ -1,18 +1,18 @@
 fileFormatVersion: 2
 guid: 753ca72a638264f40be829bd34c006bc
-timeCreated: 1485774072
+timeCreated: 1485774664
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ui_1_0
+    21300000: energy_bar_bg
     21300002: object_enemy
     21300004: object_jump
-    21300006: ui_1_3
+    21300006: energy_bar_bk
     21300008: object_shield
-    21300010: ui_1_5
-    21300012: ui_1_6
-    21300014: ui_1_7
-    21300016: ui_1_8
+    21300010: enemy_bar_rd
+    21300012: energy_bar_jump
+    21300014: energy_bar_shield
+    21300016: energy_bar_circle
     21300018: ui_1_9
     21300020: ui_1_10
     21300022: ui_1_11
@@ -22,7 +22,7 @@ TextureImporter:
     21300030: ui_1_15
     21300032: ui_1_16
     21300034: ui_1_17
-    21300036: ui_1_18
+    21300036: energy_bar_point
     21300038: ui_1_19
     21300040: ui_1_20
     21300042: ui_1_21
@@ -133,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ui_1_0
+      name: energy_bar_bg
       rect:
         serializedVersion: 2
         x: 10
@@ -172,7 +172,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_3
+      name: energy_bar_bk
       rect:
         serializedVersion: 2
         x: 25
@@ -198,7 +198,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_5
+      name: enemy_bar_rd
       rect:
         serializedVersion: 2
         x: 25
@@ -211,7 +211,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_6
+      name: energy_bar_jump
       rect:
         serializedVersion: 2
         x: 25
@@ -224,7 +224,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_7
+      name: energy_bar_shield
       rect:
         serializedVersion: 2
         x: 25
@@ -237,7 +237,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_8
+      name: energy_bar_circle
       rect:
         serializedVersion: 2
         x: 10
@@ -367,7 +367,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_18
+      name: energy_bar_point
       rect:
         serializedVersion: 2
         x: 501
