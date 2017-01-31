@@ -12,10 +12,10 @@ public class PlayerIdle : PlayerState
         ani.SetTrigger( "Idle" );
     }
 
-    public override void onTouchEnd()
+    public override void onClick()
     {
-        base.onTouchEnd();
+        base.onClick();
 
-        owner.jump( power );
+        owner.jump( Vector3.up * owner.JumpSpeed * 3 );
     }
 }

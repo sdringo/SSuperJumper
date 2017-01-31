@@ -12,6 +12,7 @@ public class Player : Entity
     }
 
     public Action<float> onScroll;
+    public Action onValueChange;
     public Action onGameOver;
 
     public float JumpSpeed = 3.3f;
@@ -24,18 +25,17 @@ public class Player : Entity
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
 
-    public float Distance { get { return distance; } set { distance = value; setStatus(); } }
-    public float ENShield { get { return enShield; } set { enShield = value; setStatus(); } }
-    public float ENJump { get { return enJump; } set { enJump = value; setStatus(); } }
+    public float Distance { get { return distance; } set { distance = value; onValueChange(); } }
+    public float ShieldEN { get { return shieldEn; } set { shieldEn = value; onValueChange(); } }
+    public float JumpEN { get { return jumpEn; } set { jumpEn = value; onValueChange(); } }
     public bool Shield { get; set; }
 
     protected PlayerState prev = null;
     protected PlayerState curr = null;
 
-    private float _maxHeight = 0.0f;
     private float distance = 0.0f;
-    private float enShield = 0.0f;
-    private float enJump = 0.0f;
+    private float shieldEn = 0.0f;
+    private float jumpEn = 0.0f;
 
     private bool touchBegan = false;
     private bool touchEnd = false;
@@ -44,17 +44,6 @@ public class Player : Entity
 
     private Image imgShield = null;
     private Image imgJump = null;
-
-    public override void initialize()
-    {
-        base.initialize();
-
-        imgShield = GameObject.Find( "bar_shield" ).GetComponent<Image>();
-        imgJump = GameObject.Find( "bar_jump" ).GetComponent<Image>();
-
-        ENShield = 300;
-        ENJump = 300;
-    }
 
     public override void updateFixed()
     {
@@ -70,9 +59,9 @@ public class Player : Entity
 
         transform.Translate( Velocity * Time.deltaTime );
 
-        if( transform.position.y > _maxHeight ) {
-            onScroll( transform.position.y - _maxHeight );
-            transform.position = new Vector3( 0, _maxHeight, 0 );
+        if( transform.position.y > 0 ) {
+            onScroll( transform.position.y );
+            transform.position = Vector3.zero;
         }
     }
 
@@ -103,15 +92,6 @@ public class Player : Entity
         }
     }
 
-    private void setStatus()
-    {
-        if( imgShield )
-            imgShield.fillAmount = enShield / MaxEn;
-
-        if( imgJump )
-            imgJump.fillAmount = enJump / MaxEn;
-    }
-
     public void changeState( PlayerState state )
     {
         if( null == state )
@@ -131,10 +111,8 @@ public class Player : Entity
 
     public void ready()
     {
-        ENShield = 300;
-        ENJump = 300;
-
-        _maxHeight = GameController.ScreenBounds.max.y * 0.2f;
+        ShieldEN = 300;
+        JumpEN = 300;
 
         transform.position = new Vector3( 0, GameController.ScreenBounds.min.y * 0.7f, 0 );
 

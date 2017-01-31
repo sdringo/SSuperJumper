@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 753ca72a638264f40be829bd34c006bc
-timeCreated: 1485774664
+timeCreated: 1485851392
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -13,8 +13,8 @@ TextureImporter:
     21300012: energy_bar_jump
     21300014: energy_bar_shield
     21300016: energy_bar_circle
-    21300018: ui_1_9
-    21300020: ui_1_10
+    21300018: icon_life
+    21300020: icon_km
     21300022: ui_1_11
     21300024: ui_1_12
     21300026: ui_1_13
@@ -26,16 +26,16 @@ TextureImporter:
     21300038: ui_1_19
     21300040: ui_1_20
     21300042: ui_1_21
-    21300044: ui_1_22
+    21300044: button_how_normal
     21300046: ui_1_23
     21300048: ui_1_24
     21300050: ui_1_25
-    21300052: ui_1_26
+    21300052: button_how_press
     21300054: ui_1_27
-    21300056: ui_1_28
+    21300056: logo
     21300058: ui_1_29
     21300060: ui_1_30
-    21300062: ui_1_31
+    21300062: launch_platform
     21300064: jumper_idle
     21300066: jumper_up_normal
     21300068: jumper_up_on
@@ -250,7 +250,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_9
+      name: icon_life
       rect:
         serializedVersion: 2
         x: 60
@@ -263,7 +263,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_10
+      name: icon_km
       rect:
         serializedVersion: 2
         x: 133
@@ -419,7 +419,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_22
+      name: button_how_normal
       rect:
         serializedVersion: 2
         x: 508
@@ -471,7 +471,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_26
+      name: button_how_press
       rect:
         serializedVersion: 2
         x: 508
@@ -497,7 +497,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_28
+      name: logo
       rect:
         serializedVersion: 2
         x: 510
@@ -536,7 +536,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_31
+      name: launch_platform
       rect:
         serializedVersion: 2
         x: 20

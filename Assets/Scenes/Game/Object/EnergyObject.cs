@@ -8,7 +8,7 @@ public class EnergyObject : BaseObject
 
     public override void hit( Player player )
     {
-        player.ENShield += Amout;
+        player.ShieldEN += Amout;
 
         onOutBounds( this );
     }

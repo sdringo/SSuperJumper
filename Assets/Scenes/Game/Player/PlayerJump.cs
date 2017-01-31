@@ -20,9 +20,9 @@ public class PlayerJump : PlayerState
             owner.changeState( new PlayerDown() );
 
         if( owner.Shield ) {
-            owner.ENShield -= owner.ReqShield * Time.deltaTime;
-            owner.ENShield = Mathf.Max( 0, owner.ENShield );
-            if( 0 >= owner.ENShield ) {
+            owner.ShieldEN -= owner.ReqShield * Time.deltaTime;
+            owner.ShieldEN = Mathf.Max( 0, owner.ShieldEN );
+            if( 0 >= owner.ShieldEN ) {
                 owner.Shield = false;
 
                 Animator ani = owner.GetComponent<Animator>();
@@ -35,7 +35,7 @@ public class PlayerJump : PlayerState
     {
         base.onTouchBegan();
 
-        if( 0 < owner.ENShield ) {
+        if( 0 < owner.ShieldEN ) {
             owner.Shield = true;
 
             Animator ani = owner.GetComponent<Animator>();
@@ -59,11 +59,13 @@ public class PlayerJump : PlayerState
     {
         base.onClick();
 
-        RaycastHit2D hit = Physics2D.Raycast( owner.transform.position, Vector2.zero );
-        if( hit.collider ) {
-            BaseObject item = hit.collider.GetComponent<BaseObject>();
-            if( item )
-                item.hit( owner );
+        RaycastHit2D[] hits = Physics2D.RaycastAll( owner.transform.position, Vector2.zero );
+        foreach( RaycastHit2D hit in hits ) {
+            if( hit.collider ) {
+                BaseObject item = hit.collider.GetComponent<BaseObject>();
+                if( item )
+                    item.hit( owner );
+            }
         }
     }
 }
