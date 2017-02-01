@@ -18,7 +18,7 @@ public class PlayerDown : PlayerState
             owner.dead();
 
         if( charge ) {
-            owner.JumpEN -= owner.ReqJump * Time.deltaTime;
+            owner.JumpEN -= owner.reqJump * Time.deltaTime;
             owner.JumpEN = Mathf.Max( 0, owner.JumpEN );
             if( 0 >= owner.JumpEN )
                 owner.jump( power );

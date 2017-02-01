@@ -16,6 +16,6 @@ public class PlayerIdle : PlayerState
     {
         base.onClick();
 
-        owner.jump( Vector3.up * owner.JumpSpeed * 3 );
+        owner.jump( Vector3.up * owner.jumpSpeed * 2 );
     }
 }

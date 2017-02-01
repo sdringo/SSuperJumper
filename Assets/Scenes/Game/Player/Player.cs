@@ -15,12 +15,13 @@ public class Player : Entity
     public Action onValueChange;
     public Action onGameOver;
 
-    public float JumpSpeed = 3.3f;
-    public float DownSpeed = 1.5f;
-    public float MinSpeed = -5.0f;
-    public float ReqShield = 10;
-    public float ReqJump = 10;
-    public float MaxEn = 1000;
+    public float jumpSpeed = 3.3f;
+    public float downSpeed = 1.5f;
+    public float maxSpeed = 10.0f;
+    public float minSpeed = -5.0f;
+    public float reqShield = 10;
+    public float reqJump = 10;
+    public float maxEn = 1000;
 
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
@@ -40,7 +41,7 @@ public class Player : Entity
     private bool touchBegan = false;
     private bool touchEnd = false;
     private float touchTime = 0.0f;
-    private float holdThreshold = 0.25f;
+    private float holdThreshold = 0.15f;
 
     public override void updateFixed()
     {
@@ -52,11 +53,12 @@ public class Player : Entity
             curr.onUpdate( this );
 
         Velocity += Gravity * Time.deltaTime;
-        Velocity = new Vector3( 0, Mathf.Max( Velocity.y, MinSpeed ), 0 );
+        Velocity = new Vector3( 0, Mathf.Min( Mathf.Max( Velocity.y, minSpeed ), maxSpeed ), 0 );
 
         transform.Translate( Velocity * Time.deltaTime );
 
         if( transform.position.y > 0 ) {
+            Distance += transform.position.y;
             onScroll( transform.position.y );
             transform.position = Vector3.zero;
         }
@@ -65,7 +67,7 @@ public class Player : Entity
     private void processTouch()
     {
         if( touchBegan ) {
-            touchTime += Time.deltaTime;
+            touchTime += Time.fixedDeltaTime;
 
             if( holdThreshold < touchTime ) {
                 touchBegan = false;
@@ -110,6 +112,7 @@ public class Player : Entity
     {
         ShieldEN = 300;
         JumpEN = 300;
+        Distance = 0;
 
         transform.position = new Vector3( 0, GameMgr.ScreenBounds.min.y * 0.5f, 0 );
 
@@ -118,7 +121,7 @@ public class Player : Entity
 
     public void jump( Vector3 power )
     {
-        Gravity = Vector3.down * DownSpeed;
+        Gravity = Vector3.down * downSpeed;
         Velocity = power;
 
         changeState( new PlayerJump() );

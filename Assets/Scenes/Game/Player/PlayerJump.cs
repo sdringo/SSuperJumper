@@ -20,7 +20,7 @@ public class PlayerJump : PlayerState
             owner.changeState( new PlayerDown() );
 
         if( owner.Shield ) {
-            owner.ShieldEN -= owner.ReqShield * Time.deltaTime;
+            owner.ShieldEN -= owner.reqShield * Time.deltaTime;
             owner.ShieldEN = Mathf.Max( 0, owner.ShieldEN );
             if( 0 >= owner.ShieldEN ) {
                 owner.Shield = false;

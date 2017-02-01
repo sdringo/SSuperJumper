@@ -34,13 +34,13 @@ public class ProgressBar : Entity
     public void onChanged()
     {
         if( imgJump )
-            imgJump.fillAmount = player.JumpEN / player.MaxEn;
+            imgJump.fillAmount = player.JumpEN / player.maxEn;
         
         if( rectJump )
             rectJump.anchoredPosition = new Vector2( -width * ( 1.0f - imgJump.fillAmount ), 0 );
 
         if( imgShield )
-            imgShield.fillAmount = player.ShieldEN / player.MaxEn;
+            imgShield.fillAmount = player.ShieldEN / player.maxEn;
 
         if( rectSheild )
             rectSheild.anchoredPosition = new Vector2( width * ( 1.0f - imgShield.fillAmount ), 0 );

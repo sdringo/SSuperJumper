@@ -21,7 +21,7 @@ public class PlayerState : FSMState<Player>
     public override void onUpdate( Player owner )
     {
         if( charge )
-            power += Vector3.up * owner.JumpSpeed * Time.deltaTime;
+            power += Vector3.up * owner.jumpSpeed * Time.deltaTime;
     }
 
     public virtual void onClick()
