@@ -25,9 +25,9 @@ public class Player : Entity
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
 
-    public float Distance { get { return distance; } set { distance = value; onValueChange(); } }
-    public float ShieldEN { get { return shieldEn; } set { shieldEn = value; onValueChange(); } }
-    public float JumpEN { get { return jumpEn; } set { jumpEn = value; onValueChange(); } }
+    public float Distance { get { return distance; } set { distance = value; if( null != onValueChange ) onValueChange(); } }
+    public float ShieldEN { get { return shieldEn; } set { shieldEn = value; if( null != onValueChange ) onValueChange(); } }
+    public float JumpEN { get { return jumpEn; } set { jumpEn = value; if( null != onValueChange ) onValueChange(); } }
     public bool Shield { get; set; }
 
     protected PlayerState prev = null;
@@ -41,9 +41,6 @@ public class Player : Entity
     private bool touchEnd = false;
     private float touchTime = 0.0f;
     private float holdThreshold = 0.25f;
-
-    private Image imgShield = null;
-    private Image imgJump = null;
 
     public override void updateFixed()
     {
@@ -114,7 +111,7 @@ public class Player : Entity
         ShieldEN = 300;
         JumpEN = 300;
 
-        transform.position = new Vector3( 0, GameController.ScreenBounds.min.y * 0.7f, 0 );
+        transform.position = new Vector3( 0, GameMgr.ScreenBounds.min.y * 0.5f, 0 );
 
         changeState( new PlayerIdle() );
     }

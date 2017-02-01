@@ -14,7 +14,7 @@ public class PlayerDown : PlayerState
     {
         base.onUpdate( owner );
 
-        if( owner.transform.position.y < GameController.ScreenBounds.min.y )
+        if( owner.transform.position.y < GameMgr.ScreenBounds.min.y )
             owner.dead();
 
         if( charge ) {
