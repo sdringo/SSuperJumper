@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 753ca72a638264f40be829bd34c006bc
-timeCreated: 1485937265
+timeCreated: 1485954487
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -15,27 +15,27 @@ TextureImporter:
     21300016: energy_bar_circle
     21300018: icon_life
     21300020: icon_km
-    21300022: ui_1_11
-    21300024: ui_1_12
+    21300022: guide_dot
+    21300024: side_pause_btn
     21300026: ui_1_13
-    21300028: ui_1_14
-    21300030: ui_1_15
+    21300028: side_menu_btn
+    21300030: side_start_btn
     21300032: ui_1_16
     21300034: ui_1_17
     21300036: energy_bar_point
     21300038: ui_1_19
     21300040: ui_1_20
-    21300042: ui_1_21
+    21300042: bar_down_danger
     21300044: button_how_normal
-    21300046: ui_1_23
-    21300048: ui_1_24
-    21300050: ui_1_25
+    21300046: side_bar_bg
+    21300048: side_bar_normal
+    21300050: side_bar_press
     21300052: button_how_press
-    21300054: ui_1_27
+    21300054: start_guide_up
     21300056: logo
-    21300058: ui_1_29
-    21300060: ui_1_30
-    21300062: launch_platform
+    21300058: launch_left_dot
+    21300060: launch_right_dot
+    21300062: launch_ground
     21300064: jumper_idle
     21300066: jumper_up_normal
     21300068: jumper_up_on
@@ -51,6 +51,11 @@ TextureImporter:
     21300088: jumper_down_normal
     21300090: jumper_down_on
     21300092: ui_1_38
+    21300094: energy_bar_ssuper
+    21300096: side_bar_bg2
+    21300098: launch_left
+    21300100: launch_right
+    21300102: launch_center
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -276,25 +281,25 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_11
+      name: guide_dot
       rect:
         serializedVersion: 2
         x: 212
-        y: 1088
+        y: 1068
         width: 6
-        height: 6
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_12
+      name: side_pause_btn
       rect:
         serializedVersion: 2
         x: 238
         y: 1066
-        width: 8
+        width: 22
         height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -302,33 +307,20 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_13
-      rect:
-        serializedVersion: 2
-        x: 252
-        y: 1066
-        width: 8
-        height: 28
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: ui_1_14
+      name: side_menu_btn
       rect:
         serializedVersion: 2
         x: 280
-        y: 1088
+        y: 1066
         width: 26
-        height: 6
+        height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_15
+      name: side_start_btn
       rect:
         serializedVersion: 2
         x: 326
@@ -380,33 +372,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_19
-      rect:
-        serializedVersion: 2
-        x: 280
-        y: 1077
-        width: 26
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: ui_1_20
-      rect:
-        serializedVersion: 2
-        x: 280
-        y: 1066
-        width: 26
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: ui_1_21
+      name: bar_down_danger
       rect:
         serializedVersion: 2
         x: 10
@@ -432,7 +398,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_23
+      name: side_bar_bg
       rect:
         serializedVersion: 2
         x: 10
@@ -445,7 +411,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_24
+      name: side_bar_normal
       rect:
         serializedVersion: 2
         x: 180
@@ -458,13 +424,13 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_25
+      name: side_bar_press
       rect:
         serializedVersion: 2
-        x: 331
-        y: 844
-        width: 130
-        height: 131
+        x: 330
+        y: 845
+        width: 131
+        height: 132
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -484,7 +450,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_27
+      name: start_guide_up
       rect:
         serializedVersion: 2
         x: 181
@@ -510,7 +476,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_29
+      name: launch_left_dot
       rect:
         serializedVersion: 2
         x: 181
@@ -523,7 +489,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_30
+      name: launch_right_dot
       rect:
         serializedVersion: 2
         x: 214
@@ -536,16 +502,16 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: launch_platform
+      name: launch_ground
       rect:
         serializedVersion: 2
         x: 20
-        y: 308
+        y: 298
         width: 720
-        height: 309
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        height: 219
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 2}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
@@ -621,6 +587,71 @@ TextureImporter:
         y: 137
         width: 110
         height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: energy_bar_ssuper
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 83
+        width: 650
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: side_bar_bg2
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 661
+        width: 161
+        height: 313
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: launch_left
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 527
+        width: 53
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: launch_right
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 527
+        width: 53
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: launch_center
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 527
+        width: 280
+        height: 40
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
