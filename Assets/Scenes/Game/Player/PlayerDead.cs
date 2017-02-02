@@ -17,6 +17,6 @@ public class PlayerDead : PlayerState
     {
         base.onClick();
 
-        owner.onGameOver();
+        owner.onPlayerDead();
     }
 }

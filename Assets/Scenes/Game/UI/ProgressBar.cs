@@ -5,9 +5,11 @@ public class ProgressBar : Entity
 {
     public GameObject jump = null;
     public GameObject shield = null;
+    public GameObject super = null;
 
     private Image imgJump = null;
     private Image imgShield = null;
+    private Image imgSuper = null;
 
     private RectTransform rectJump = null;
     private RectTransform rectSheild = null;
@@ -25,6 +27,7 @@ public class ProgressBar : Entity
 
         imgJump = jump.GetComponent<Image>();
         imgShield = shield.GetComponent<Image>();
+        imgSuper = super.GetComponent<Image>();
         width = imgJump.preferredWidth;
 
         rectJump = jump.transform.GetChild( 0 ).GetComponent<RectTransform>();

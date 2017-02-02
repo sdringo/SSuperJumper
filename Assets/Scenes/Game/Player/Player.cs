@@ -13,7 +13,7 @@ public class Player : Entity
 
     public Action<float> onScroll;
     public Action onValueChange;
-    public Action onGameOver;
+    public Action onPlayerDead;
 
     public float jumpSpeed = 3.3f;
     public float downSpeed = 1.5f;
@@ -117,6 +117,11 @@ public class Player : Entity
         transform.position = new Vector3( 0, GameMgr.ScreenBounds.min.y * 0.5f, 0 );
 
         changeState( new PlayerIdle() );
+    }
+
+    public void start()
+    {
+        jump( Vector3.up * jumpSpeed * 2 );
     }
 
     public void jump( Vector3 power )

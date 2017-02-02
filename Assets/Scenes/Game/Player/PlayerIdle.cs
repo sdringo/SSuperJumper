@@ -11,11 +11,4 @@ public class PlayerIdle : PlayerState
         Animator ani = owner.GetComponent<Animator>();
         ani.SetTrigger( "Idle" );
     }
-
-    public override void onClick()
-    {
-        base.onClick();
-
-        owner.jump( Vector3.up * owner.jumpSpeed * 2 );
-    }
 }

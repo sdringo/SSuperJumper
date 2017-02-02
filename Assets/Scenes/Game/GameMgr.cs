@@ -1,15 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameMgr : Entity
 {
+    public Action onGameStart;
+    public Action onGameResume;
+    public Action onGamePause;
+    public Action onGameOver;
+
     public static Bounds ScreenBounds { get; set; }
+    public static Bounds OutBounds { get; set; }
 
     public float respwanDistance = 10.0f;
     public List<BaseObject> respwans = new List<BaseObject>();
 
     private GameObject bg = null;
-    private GameObject flaform = null;
     private Bounds bgBounds;
 
     private Player player = null;
@@ -23,19 +30,29 @@ public class GameMgr : Entity
     {
         base.initialize();
 
+        DOTween.Init( false, true, LogBehaviour.ErrorsOnly );
+
         Vector3 size = Vector2.zero;
         size.y = Camera.main.orthographicSize * 2.0f;
         size.x = size.y * Screen.width / Screen.height;
         ScreenBounds = new Bounds( Vector3.zero, size );
+        OutBounds = new Bounds( Vector3.zero, size * 1.5f );
 
-        bg = transform.FindChild( "Bg" ).gameObject;
-        flaform = transform.FindChild( "LaunchPlatform" ).gameObject;
+        bg = transform.FindChild( "BgSrc" ).gameObject;
         bgBounds = bg.GetComponent<SpriteRenderer>().bounds;
 
         player = FindObjectOfType<Player>();
+        player.onScroll += onScroll;
+        player.onPlayerDead += onPlayerDead;
         player.ready();
-        player.onScroll = onScroll;
-        player.onGameOver = onGameOver;
+        
+        LaunchPlatform platform = gameObject.GetComponentInChildren<LaunchPlatform>();
+        player.onScroll += platform.onScroll;
+        player.onPlayerDead += platform.onReset;
+
+        onGameStart += player.start;
+        onGamePause += player.pause;
+        onGameResume += player.resume;
 
         score = 0.0f;
         lastRespwan = 0;
@@ -51,6 +68,25 @@ public class GameMgr : Entity
         }
     }
 
+    public void gameStart()
+    {
+        onGameStart();
+    }
+
+    public void gamePause()
+    {
+        pause();
+
+        onGamePause();
+    }
+
+    public void gameResume()
+    {
+        resume();
+
+        onGameResume();
+    }
+
     public void onScroll( float distance )
     {
         score += distance;
@@ -59,7 +95,7 @@ public class GameMgr : Entity
         if( lastRespwan < current ) {
             lastRespwan = current;
 
-            int index = Random.Range( 0, respwans.Count );
+            int index = UnityEngine.Random.Range( 0, respwans.Count );
 
             BaseObject obj = Instantiate<BaseObject>( respwans[index] );
             obj.transform.Translate( respwarnPos );
@@ -68,10 +104,6 @@ public class GameMgr : Entity
 
             objects.Add( obj );
         }
-
-        flaform.transform.Translate( 0, -distance, 0 );
-        if( flaform.transform.position.y < bgBounds.min.y - bgBounds.size.y )
-            flaform.SetActive( false );
 
         //bg1.transform.Translate( 0, -distance * 0.1f, 0 );
         //bg2.transform.Translate( 0, -distance * 0.1f, 0 );
@@ -87,15 +119,12 @@ public class GameMgr : Entity
         //}
     }
 
-    public void onGameOver()
+    public void onPlayerDead()
     {
+        onGameOver();
+
         if( player )
             player.ready();
-
-        if( flaform ) {
-            flaform.SetActive( true );
-            flaform.transform.position = new Vector3( 0, ScreenBounds.min.y, 0 );
-        }
 
         //if( bg2 )
         //    bg2.transform.position = new Vector3( 0, bgBounds.size.y, 0 );
