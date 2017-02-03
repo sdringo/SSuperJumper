@@ -9,10 +9,10 @@ public class BackGround : Entity
     public List<Sprite> sprites;
 
     public float section = 100.0f;
+    public float change = 10.0f;
 
     private float total = 0.0f;
-    private int curr = 0;
-    private int prev = 0;
+    private bool changing = false;
     private int index = 1;
 
     public override void initialize()
@@ -28,22 +28,25 @@ public class BackGround : Entity
     {
         total += distance;
 
-        prev = curr;
-        curr = (int)(total / section);
+        if( section - change < total % section ) {
+            changing = true;
 
-        if( prev != curr )
-            changeBg();
+            float ratio = ( section - total % section ) / change;
+            bgSrc.color = new Color( 1, 1, 1, ratio );
+            bgDst.color = new Color( 1, 1, 1, 1.0f - ratio );
 
-        float ratio = (total % section) / section;
-        bgSrc.color = new Color( 1, 1, 1, 1.0f - ratio );
-        bgDst.color = new Color( 1, 1, 1, ratio );
+            Debug.Log( ratio );
+        } else {
+            if( changing ) {
+                changeBg();
+                changing = false;
+            }
+        }
     }
 
     private void gameOver()
     {
         total = 0;
-        curr = 0;
-        prev = 0;
         index = 1;
 
         bgSrc.sprite = sprites[0];
@@ -55,11 +58,13 @@ public class BackGround : Entity
     private void changeBg()
     {
         bgSrc.sprite = bgDst.sprite;
+        bgSrc.color = Color.white;
 
         index++;
         if( index > sprites.Count )
             index = 0;
 
         bgDst.sprite = sprites[index];
+        bgDst.color = Color.white;
     }
 }
