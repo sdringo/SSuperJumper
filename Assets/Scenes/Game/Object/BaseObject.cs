@@ -10,7 +10,7 @@ public class BaseObject : Entity
         base.initialize();
     }
 
-    public void onScroll( float distance )
+    public void scroll( float distance )
     {
         transform.Translate( 0, -distance, 0 );
 

@@ -5,28 +5,28 @@ using UnityEngine;
 public class LaunchPlatform : Entity
 {
     private Vector3 initPos;
-    private bool scroll = false;
+    private bool isScroll = false;
 
     public override void initialize()
     {
         base.initialize();
 
         initPos = transform.position;
-        scroll = true;
+        isScroll = true;
     }
 
-    public void onScroll( float distance )
+    public void scroll( float distance )
     {
-        if( scroll ) {
+        if( isScroll ) {
             transform.Translate( 0, -distance, 0 );
             if( transform.position.y < GameMgr.OutBounds.min.y )
-                scroll = false;
+                isScroll = false;
         }
     }
 
-    public void onReset()
+    public void reset()
     {
         transform.position = initPos;
-        scroll = true;
+        isScroll = true;
     }
 }

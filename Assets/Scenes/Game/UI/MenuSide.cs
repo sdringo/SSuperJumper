@@ -7,13 +7,14 @@ public class MenuSide : Entity
     public GameObject objResume;
     public GameObject objPause;
 
+    private GameMgr gameMgr = null;
     private bool inGame = false;
 
     public override void initialize()
     {
         base.initialize();
 
-        GameMgr gameMgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
+        gameMgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
         gameMgr.onGameStart += gameStart;
         gameMgr.onGameOver += gameMenu;
 
@@ -23,7 +24,6 @@ public class MenuSide : Entity
     public void onMenu()
     {
         if( inGame ) {
-            GameMgr gameMgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
             if( gameMgr.isPaused ) {
                 gameMgr.gameResume();
                 gameResume();

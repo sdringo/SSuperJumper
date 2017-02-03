@@ -9,15 +9,13 @@ public class GameMgr : Entity
     public Action onGameResume;
     public Action onGamePause;
     public Action onGameOver;
+    public Action<float> onScroll;
 
     public static Bounds ScreenBounds { get; set; }
     public static Bounds OutBounds { get; set; }
 
     public float respwanDistance = 10.0f;
     public List<BaseObject> respwans = new List<BaseObject>();
-
-    private GameObject bg = null;
-    private Bounds bgBounds;
 
     private Player player = null;
     private float score = 0.0f;
@@ -38,21 +36,18 @@ public class GameMgr : Entity
         ScreenBounds = new Bounds( Vector3.zero, size );
         OutBounds = new Bounds( Vector3.zero, size * 1.5f );
 
-        bg = transform.FindChild( "BgSrc" ).gameObject;
-        bgBounds = bg.GetComponent<SpriteRenderer>().bounds;
-
         player = FindObjectOfType<Player>();
-        player.onScroll += onScroll;
-        player.onPlayerDead += onPlayerDead;
+        player.onScroll += scroll;
+        player.onPlayerDead += playerDead;
         player.ready();
         
-        LaunchPlatform platform = gameObject.GetComponentInChildren<LaunchPlatform>();
-        player.onScroll += platform.onScroll;
-        player.onPlayerDead += platform.onReset;
-
         onGameStart += player.start;
         onGamePause += player.pause;
         onGameResume += player.resume;
+
+        LaunchPlatform platform = gameObject.GetComponentInChildren<LaunchPlatform>();
+        onGameOver += platform.reset;
+        onScroll += platform.scroll;
 
         score = 0.0f;
         lastRespwan = 0;
@@ -87,8 +82,10 @@ public class GameMgr : Entity
         onGameResume();
     }
 
-    public void onScroll( float distance )
+    private void scroll( float distance )
     {
+        onScroll( distance );
+
         score += distance;
 
         int current = (int)( score / respwanDistance );
@@ -100,38 +97,21 @@ public class GameMgr : Entity
             BaseObject obj = Instantiate<BaseObject>( respwans[index] );
             obj.transform.Translate( respwarnPos );
             obj.onOutBounds = onOutBounds;
-            player.onScroll += obj.onScroll;
+            onScroll += obj.scroll;
 
             objects.Add( obj );
         }
-
-        //bg1.transform.Translate( 0, -distance * 0.1f, 0 );
-        //bg2.transform.Translate( 0, -distance * 0.1f, 0 );
-
-        if( bg.transform.position.y < -bgBounds.size.y ) {
-            float offset = bgBounds.size.y + bg.transform.position.y;
-            bg.transform.position = new Vector3( 0, bgBounds.size.y + offset, 0 );
-        }
-
-        //if( bg2.transform.position.y < -bgBounds.size.y ) {
-        //    float offset = bgBounds.size.y + bg2.transform.position.y;
-        //    bg2.transform.position = new Vector3( 0, bgBounds.size.y + offset, 0 );
-        //}
     }
 
-    public void onPlayerDead()
+    private void playerDead()
     {
         onGameOver();
 
         if( player )
             player.ready();
 
-        //if( bg2 )
-        //    bg2.transform.position = new Vector3( 0, bgBounds.size.y, 0 );
-
         foreach( BaseObject obj in objects ) {
-            if( player )
-                player.onScroll -= obj.onScroll;
+            onScroll -= obj.scroll;
 
             GameObject.DestroyObject( obj.gameObject );
         }
@@ -144,8 +124,7 @@ public class GameMgr : Entity
 
     public void onOutBounds( BaseObject obj )
     {
-        if( player )
-            player.onScroll -= obj.onScroll;
+        onScroll -= obj.scroll;
 
         objects.Remove( obj );
 

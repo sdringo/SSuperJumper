@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyObject : BaseObject
 {
-    void OnTriggerEnter2D( Collider2D other )
+    private void OnTriggerEnter2D( Collider2D other )
     {
         if( other.name.Equals( "Player" ) ) {
             Player player = other.GetComponent<Player>();
