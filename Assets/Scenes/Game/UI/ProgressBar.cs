@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ProgressBar : Entity
 {
@@ -23,29 +24,63 @@ public class ProgressBar : Entity
         base.initialize();
 
         player = FindObjectOfType<Player>();
-        player.onValueChange += onChanged;
+        player.onJumpEnChange += jumpEnChange;
+        player.onShieldEnChange += shieldEnChange;
+        player.onSuperJumpBegin += superJumpBegin;
+        player.onSuperJumpEnd += superJumpEnd;
 
         imgJump = jump.GetComponent<Image>();
+        imgJump.fillAmount = player.JumpEN / player.maxEn;
         imgShield = shield.GetComponent<Image>();
+        imgShield.fillAmount = player.ShieldEN / player.maxEn;
         imgSuper = super.GetComponent<Image>();
         width = imgJump.preferredWidth;
 
         rectJump = jump.transform.GetChild( 0 ).GetComponent<RectTransform>();
+        rectJump.anchoredPosition = new Vector2( -width * ( 1.0f - imgJump.fillAmount ), 0 );
         rectSheild = shield.transform.GetChild( 0 ).GetComponent<RectTransform>();
+        rectSheild.anchoredPosition = new Vector2( width * ( 1.0f - imgShield.fillAmount ), 0 );
     }
 
-    public void onChanged()
+    public void jumpEnChange()
     {
         if( imgJump )
-            imgJump.fillAmount = player.JumpEN / player.maxEn;
-        
-        if( rectJump )
-            rectJump.anchoredPosition = new Vector2( -width * ( 1.0f - imgJump.fillAmount ), 0 );
+            imgJump.DOFillAmount( player.JumpEN / player.maxEn, 0.1f );
 
+        if( rectJump )
+            rectJump.DOAnchorPosX( -width * ( 1.0f - player.JumpEN / player.maxEn ), 0.1f );
+    }
+
+    public void shieldEnChange()
+    {
         if( imgShield )
-            imgShield.fillAmount = player.ShieldEN / player.maxEn;
+            imgShield.DOFillAmount( player.ShieldEN / player.maxEn, 0.1f );
 
         if( rectSheild )
-            rectSheild.anchoredPosition = new Vector2( width * ( 1.0f - imgShield.fillAmount ), 0 );
+            rectSheild.DOAnchorPosX( width * ( 1.0f - player.ShieldEN / player.maxEn ), 0.1f );
+    }
+
+    public void superJumpBegin()
+    {
+        if( jump )
+            jump.SetActive( false );
+
+        if( shield )
+            shield.SetActive( false );
+
+        if( super )
+            super.SetActive( true );
+    }
+
+    public void superJumpEnd()
+    {
+        if( jump )
+            jump.SetActive( true );
+
+        if( shield )
+            shield.SetActive( true );
+
+        if( super )
+            super.SetActive( false );
     }
 }

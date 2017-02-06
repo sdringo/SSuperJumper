@@ -19,6 +19,8 @@ public class BackGround : Entity
     {
         base.initialize();
 
+        total = section - change;
+
         GameMgr gameMgr = FindObjectOfType<GameMgr>();
         gameMgr.onScroll += scroll;
         gameMgr.onGameOver += gameOver;
@@ -34,8 +36,6 @@ public class BackGround : Entity
             float ratio = ( section - total % section ) / change;
             bgSrc.color = new Color( 1, 1, 1, ratio );
             bgDst.color = new Color( 1, 1, 1, 1.0f - ratio );
-
-            Debug.Log( ratio );
         } else {
             if( changing ) {
                 changeBg();
@@ -46,7 +46,7 @@ public class BackGround : Entity
 
     private void gameOver()
     {
-        total = 0;
+        total = section - change;
         index = 1;
 
         bgSrc.sprite = sprites[0];
@@ -62,7 +62,7 @@ public class BackGround : Entity
 
         index++;
         if( index > sprites.Count )
-            index = 0;
+            index = 1;
 
         bgDst.sprite = sprites[index];
         bgDst.color = Color.white;

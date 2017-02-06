@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Player : Entity
 {
@@ -12,7 +13,10 @@ public class Player : Entity
     }
 
     public Action<float> onScroll;
-    public Action onValueChange;
+    public Action onJumpEnChange;
+    public Action onShieldEnChange;
+    public Action onSuperJumpBegin;
+    public Action onSuperJumpEnd;
     public Action onPlayerDead;
 
     public float jumpSpeed = 3.3f;
@@ -22,26 +26,32 @@ public class Player : Entity
     public float reqShield = 10;
     public float reqJump = 10;
     public float maxEn = 1000;
+    public float superTime = 5.0f;
 
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
-
-    public float Distance { get { return distance; } set { distance = value; if( null != onValueChange ) onValueChange(); } }
-    public float ShieldEN { get { return shieldEn; } set { shieldEn = value; if( null != onValueChange ) onValueChange(); } }
-    public float JumpEN { get { return jumpEn; } set { jumpEn = value; if( null != onValueChange ) onValueChange(); } }
+    public float Distance { get; set; }
+    public float ShieldEN { get { return shieldEn; } set { shieldEn = value; if( null != onShieldEnChange ) onShieldEnChange(); } }
+    public float JumpEN { get { return jumpEn; } set { jumpEn = value; if( null != onJumpEnChange ) onJumpEnChange(); } }
     public bool Shield { get; set; }
 
     protected PlayerState prev = null;
     protected PlayerState curr = null;
 
-    private float distance = 0.0f;
+    private BaseObject hittedItem = null;
     private float shieldEn = 0.0f;
     private float jumpEn = 0.0f;
+    private float prevMax = 0.0f;
 
     private bool touchBegan = false;
     private bool touchEnd = false;
     private float touchTime = 0.0f;
     private float holdThreshold = 0.15f;
+
+    public override void initialize()
+    {
+        base.initialize();
+    }
 
     public override void updateFixed()
     {
@@ -64,6 +74,23 @@ public class Player : Entity
         }
     }
 
+    private void OnTriggerEnter2D( Collider2D other )
+    {
+        if( other.name.Contains( "ShieldObject" ) || other.name.Contains( "JumpObject" ) ) {
+            hittedItem = other.GetComponent<BaseObject>();
+        }
+    }
+
+    private void OnTriggerExit2D( Collider2D other )
+    {
+        if( !hittedItem )
+            return;
+
+        if( hittedItem.name.Equals( other.name ) ) {
+            hittedItem = null;
+        }   
+    }
+
     private void processTouch()
     {
         if( touchBegan ) {
@@ -78,7 +105,7 @@ public class Player : Entity
         }
 
         if( touchEnd ) {
-            if( !touchBegan ) {
+            if( holdThreshold < touchTime ) {
                 if( null != curr )
                     curr.onTouchEnd();
             } else {
@@ -108,12 +135,22 @@ public class Player : Entity
         curr.onEnter( this );
     }
 
+    public void checkItem()
+    {
+        if( hittedItem ) {
+            hittedItem.hit( this );
+
+            if( JumpEN + ShieldEN > maxEn )
+                superJumpBegin();
+        }
+    }
+
     public void ready()
     {
         ShieldEN = 300;
         JumpEN = 300;
         Distance = 0;
-
+        
         transform.position = new Vector3( 0, GameMgr.ScreenBounds.min.y * 0.5f, 0 );
 
         changeState( new PlayerIdle() );
@@ -132,6 +169,39 @@ public class Player : Entity
         changeState( new PlayerJump() );
     }
 
+    public void superJumpBegin()
+    {
+        Gravity = Vector2.zero;
+        Velocity = Vector2.up * maxSpeed * 1.3f;
+        Shield = true;
+
+        prevMax = maxSpeed;
+        maxSpeed = prevMax * 2;
+
+        changeState( new PlayerSuper() );
+
+        onSuperJumpBegin();
+
+        Sequence seq = DOTween.Sequence();
+        seq.AppendInterval( superTime );
+        seq.AppendCallback( () => {
+            Gravity = Vector2.down * downSpeed;
+        } );
+    }
+
+    public void superJumpEnd()
+    {
+        maxSpeed = prevMax;
+
+        Shield = false;
+        JumpEN = maxEn * 0.25f;
+        ShieldEN = maxEn * 0.25f;
+
+        changeState( new PlayerDown() );
+
+        onSuperJumpEnd();
+    }
+
     public void dead()
     {
         changeState( new PlayerDead() );
@@ -145,6 +215,7 @@ public class Player : Entity
 
     public void onTouchEnd()
     {
+        touchBegan = false;
         touchEnd = true;
     }
 }

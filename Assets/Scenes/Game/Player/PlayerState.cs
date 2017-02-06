@@ -8,14 +8,14 @@ public class PlayerState : FSMState<Player>
 
     public override void onEnter( Player owner )
     {
-        Debug.Log( GetType().Name + " : onEnter" );
+        //Debug.Log( GetType().Name + " : onEnter" );
 
         this.owner = owner;
     }
 
     public override void onExit( Player owner )
     {
-        Debug.Log( GetType().Name + " : onExit" );
+        //Debug.Log( GetType().Name + " : onExit" );
     }
 
     public override void onUpdate( Player owner )
@@ -26,12 +26,12 @@ public class PlayerState : FSMState<Player>
 
     public virtual void onClick()
     {
-        Debug.Log( GetType().Name + " : onClick" );
+        //Debug.Log( GetType().Name + " : onClick" );
     }
 
     public virtual void onTouchBegan()
     {
-        Debug.Log( GetType().Name + " : onTouchBegan" );
+        //Debug.Log( GetType().Name + " : onTouchBegan" );
 
         power = Vector3.zero;
         charge = true;
@@ -39,7 +39,7 @@ public class PlayerState : FSMState<Player>
 
     public virtual void onTouchEnd()
     {
-        Debug.Log( GetType().Name + " : onTouchEnd" );
+        //Debug.Log( GetType().Name + " : onTouchEnd" );
 
         charge = false;
     }

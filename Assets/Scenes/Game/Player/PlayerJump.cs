@@ -59,13 +59,6 @@ public class PlayerJump : PlayerState
     {
         base.onClick();
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll( owner.transform.position, Vector2.zero );
-        foreach( RaycastHit2D hit in hits ) {
-            if( hit.collider ) {
-                BaseObject item = hit.collider.GetComponent<BaseObject>();
-                if( item )
-                    item.hit( owner );
-            }
-        }
+        owner.checkItem();
     }
 }

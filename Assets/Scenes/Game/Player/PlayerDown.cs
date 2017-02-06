@@ -43,4 +43,11 @@ public class PlayerDown : PlayerState
             owner.jump( power * 1.2f );
         }   
     }
+
+    public override void onClick()
+    {
+        base.onClick();
+
+        owner.checkItem();
+    }
 }

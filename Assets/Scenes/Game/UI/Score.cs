@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Score : Entity
@@ -12,13 +11,15 @@ public class Score : Entity
     {
         base.initialize();
 
-        player = FindObjectOfType<Player>();
-        player.onValueChange += onChanged;
+        GameMgr mgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
+        mgr.onScroll += scroll;
+
+        player = GameObject.FindWithTag( "Player" ).GetComponent<Player>();
     }
 
-    private void onChanged()
+    private void scroll( float distance )
     {
         if( score )
             score.text = string.Format( "{0}", (int)player.Distance );
-	}
+    }
 }
