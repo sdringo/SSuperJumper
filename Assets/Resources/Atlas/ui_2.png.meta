@@ -1,0 +1,464 @@
+fileFormatVersion: 2
+guid: b4cd0fac282c148cabb2ad4d68f6cf36
+timeCreated: 1487187959
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: planet_01
+    21300002: star_small
+    21300004: popup_title_bg
+    21300006: star_medium
+    21300008: star_larger
+    21300010: next_btn_press
+    21300012: popup_dvbar
+    21300014: popup_life_bg
+    21300016: ui_2_8
+    21300018: popup_crown
+    21300020: next_btn_gr
+    21300022: next_btn_normal
+    21300024: ui_2_12
+    21300026: popup_ic_item
+    21300028: popup_ic_rank
+    21300030: ui_2_15
+    21300032: ui_2_16
+    21300034: btn2_normal
+    21300036: ui_2_18
+    21300038: btn1_s_normal
+    21300040: btn2_press
+    21300042: btn1_l_normal
+    21300044: ui_2_22
+    21300046: btn1_s_press
+    21300048: btn1_l_press
+    21300050: ui_2_25
+    21300052: popup_bg
+    21300054: btn3_l_normal
+    21300056: btn3_l_press
+    21300058: ui_2_29
+    21300060: popup_skin_bg
+    21300062: ui_2_31
+    21300064: ui_2_32
+    21300066: popup_item_icon
+    21300068: popup_item_life
+    21300070: skin_btn_normal
+    21300072: skin_btn_press
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: planet_01
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 800
+        width: 650
+        height: 650
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: star_small
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1447
+        width: 3
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_title_bg
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1359
+        width: 170
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: star_medium
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 1438
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: star_larger
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1430
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: next_btn_press
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1430
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_dvbar
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1429
+        width: 4
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_life_bg
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 1367
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_crown
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 1371
+        width: 38
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: next_btn_gr
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 1378
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: next_btn_normal
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1378
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_ic_item
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 1367
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_ic_rank
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 1367
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn2_normal
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1236
+        width: 286
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn1_s_normal
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 1239
+        width: 285
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn2_press
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1116
+        width: 286
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn1_l_normal
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 996
+        width: 580
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn1_s_press
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 1116
+        width: 285
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn1_l_press
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 876
+        width: 580
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_bg
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 20
+        width: 680
+        height: 740
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn3_l_normal
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 756
+        width: 580
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: btn3_l_press
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 636
+        width: 580
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_skin_bg
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 336
+        width: 580
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_item_icon
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 27
+        width: 280
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_item_life
+      rect:
+        serializedVersion: 2
+        x: 1106
+        y: 31
+        width: 324
+        height: 273
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: skin_btn_normal
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 1001
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: skin_btn_press
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 881
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

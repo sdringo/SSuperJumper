@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 753ca72a638264f40be829bd34c006bc
-timeCreated: 1485954487
+timeCreated: 1487182231
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -20,8 +20,8 @@ TextureImporter:
     21300026: ui_1_13
     21300028: side_menu_btn
     21300030: side_start_btn
-    21300032: ui_1_16
-    21300034: ui_1_17
+    21300032: object_warp_bg
+    21300034: skin_bubble
     21300036: energy_bar_point
     21300038: ui_1_19
     21300040: ui_1_20
@@ -56,6 +56,9 @@ TextureImporter:
     21300098: launch_left
     21300100: launch_right
     21300102: launch_center
+    21300104: popup_ad_skin
+    21300106: object_warp_item
+    21300108: jumper_ic
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -105,7 +108,7 @@ TextureImporter:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,7 +116,7 @@ TextureImporter:
   - buildTarget: Standalone
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -333,26 +336,26 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_16
+      name: object_warp_bg
       rect:
         serializedVersion: 2
-        x: 386
-        y: 1082
-        width: 35
-        height: 12
+        x: 1038
+        y: 1177
+        width: 68
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ui_1_17
+      name: skin_bubble
       rect:
         serializedVersion: 2
-        x: 440
-        y: 1072
-        width: 21
-        height: 22
+        x: 366
+        y: 1045
+        width: 102
+        height: 58
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -652,6 +655,45 @@ TextureImporter:
         y: 527
         width: 280
         height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: popup_ad_skin
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 329
+        width: 280
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: object_warp_item
+      rect:
+        serializedVersion: 2
+        x: 1136
+        y: 1185
+        width: 52
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: jumper_ic
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 300
+        width: 53
+        height: 45
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
