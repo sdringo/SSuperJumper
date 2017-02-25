@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GameMgr : Entity
+public class GameMgr : SingletonObject<GameMgr>
 {
     public Action onGameStart;
     public Action onGameResume;
     public Action onGamePause;
     public Action onGameOver;
+    public Action onGameRestart;
     public Action<float> onScroll;
 
     public static Bounds ScreenBounds { get; set; }
@@ -17,8 +18,10 @@ public class GameMgr : Entity
     public float respwanDistance = 10.0f;
     public List<BaseObject> respwans = new List<BaseObject>();
 
+    public float Score { get; set; }
+    public int Life { get; set; }
+
     private Player player = null;
-    private float score = 0.0f;
 
     private List<BaseObject> objects = new List<BaseObject>();
     private int lastRespwan = 0;
@@ -45,11 +48,8 @@ public class GameMgr : Entity
         onGamePause += player.pause;
         onGameResume += player.resume;
 
-        LaunchPlatform platform = gameObject.GetComponentInChildren<LaunchPlatform>();
-        onGameOver += platform.reset;
-        onScroll += platform.scroll;
-
-        score = 0.0f;
+        Score = 0.0f;
+        Life = 2;
         lastRespwan = 0;
         respwarnPos.y = Camera.main.orthographicSize * 1.1f;
     }
@@ -82,13 +82,51 @@ public class GameMgr : Entity
         onGameResume();
     }
 
+    public void gameOver()
+    {
+        resume();
+
+        if( player )
+            player.ready();
+
+        foreach( BaseObject obj in objects ) {
+            onScroll -= obj.scroll;
+
+            GameObject.DestroyObject( obj.gameObject );
+        }
+
+        objects.Clear();
+        lastRespwan = 0;
+
+        Score = 0.0f;
+        Life = 2;
+
+        onGameResume();
+        onGameOver();
+    }
+
+    public void gameRestart()
+    {
+        resume();
+
+        Life--;
+
+        if( player ) {
+            player.ready();
+            player.start();
+        }
+
+        onGameResume();
+        onGameRestart();
+    }
+
     private void scroll( float distance )
     {
         onScroll( distance );
 
-        score += distance;
+        Score += distance;
 
-        int current = (int)( score / respwanDistance );
+        int current = (int)( Score / respwanDistance );
         if( lastRespwan < current ) {
             lastRespwan = current;
 
@@ -105,21 +143,11 @@ public class GameMgr : Entity
 
     private void playerDead()
     {
-        onGameOver();
+        pause();
 
-        if( player )
-            player.ready();
+        onGamePause();
 
-        foreach( BaseObject obj in objects ) {
-            onScroll -= obj.scroll;
-
-            GameObject.DestroyObject( obj.gameObject );
-        }
-
-        objects.Clear();
-
-        score = 0.0f;
-        lastRespwan = 0;
+        PopupMgr.instance.showContinue();
     }
 
     public void onOutBounds( BaseObject obj )

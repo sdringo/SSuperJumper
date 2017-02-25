@@ -7,10 +7,10 @@ public class EnemyObject : BaseObject
     private void OnTriggerEnter2D( Collider2D other )
     {
         if( other.name.Equals( "Player" ) ) {
+            onOutBounds( this );
+
             Player player = other.GetComponent<Player>();
-            if( player.Shield )
-                onOutBounds( this );
-            else
+            if( !player.Shield )
                 player.dead();
         }
     }

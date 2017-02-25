@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ProgressBar : Entity
+public class UIProgressBar : Entity
 {
     public GameObject jump = null;
     public GameObject shield = null;

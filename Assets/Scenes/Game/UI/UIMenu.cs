@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuSide : Entity
+public class UIMenu : Entity
 {
     public GameObject objMenu;
     public GameObject objResume;
     public GameObject objPause;
 
-    private GameMgr gameMgr = null;
     private bool inGame = false;
 
     public override void initialize()
     {
         base.initialize();
 
-        gameMgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
-        gameMgr.onGameStart += gameStart;
-        gameMgr.onGameOver += gameMenu;
+        GameMgr.instance.onGameStart += gameStart;
+        GameMgr.instance.onGameOver += gameMenu;
 
         gameMenu();
     }
@@ -24,15 +22,15 @@ public class MenuSide : Entity
     public void onMenu()
     {
         if( inGame ) {
-            if( gameMgr.isPaused ) {
-                gameMgr.gameResume();
+            if( GameMgr.instance.isPaused ) {
+                GameMgr.instance.gameResume();
                 gameResume();
             } else {
-                gameMgr.gamePause();
+                GameMgr.instance.gamePause();
                 gamePause();
             }
         } else {
-            
+            PopupMgr.instance.showMenu();
         }
     }
 

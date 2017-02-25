@@ -4,21 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class MenuGame : Entity
+public class UIGame : Entity
 {
     public RectTransform progressEn;
     public RectTransform imgDanger;
+    public Text life = null;
+    public Text score = null;
+
+    private Player player = null;
 
     public override void initialize()
     {
         base.initialize();
 
-        GameMgr gameMgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
-        gameMgr.onGameStart += show;
-        gameMgr.onGameOver += hide;
+        GameMgr.instance.onGameStart += show;
+        GameMgr.instance.onGameOver += hide;
+        GameMgr.instance.onScroll += scroll;
+        GameMgr.instance.onGameRestart += reset;
+
+        player = GameObject.FindWithTag( "Player" ).GetComponent<Player>();
 
         if( progressEn )
             progressEn.anchoredPosition = new Vector2( 0, 20 );
+
+        if( life )
+            life.text = GameMgr.instance.Life.ToString();
 
         gameObject.SetActive( false );
     }
@@ -37,5 +47,16 @@ public class MenuGame : Entity
             progressEn.anchoredPosition = new Vector2( 0, 20 );
 
         gameObject.SetActive( false );
+    }
+
+    private void scroll( float distance )
+    {
+        if( score )
+            score.text = string.Format( "{0}", (int)player.Distance );
+    }
+
+    private void reset()
+    {
+        life.text = GameMgr.instance.Life.ToString();
     }
 }

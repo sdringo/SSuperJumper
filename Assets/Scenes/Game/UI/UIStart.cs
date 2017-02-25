@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class MenuStart : Entity
+public class UIStart : Entity
 {
     public Text tap;
 
@@ -12,9 +12,8 @@ public class MenuStart : Entity
     {
         base.initialize();
 
-        GameMgr gameMgr = GameObject.FindWithTag( "GameController" ).GetComponent<GameMgr>();
-        gameMgr.onGameStart += hide;
-        gameMgr.onGameOver += show;
+        GameMgr.instance.onGameStart += hide;
+        GameMgr.instance.onGameOver += show;
 
         if( tap ) {
             Sequence blink = DOTween.Sequence();
@@ -33,5 +32,10 @@ public class MenuStart : Entity
     public void hide()
     {
         gameObject.SetActive( false );
+    }
+
+    public void onTutorial()
+    {
+        PopupMgr.instance.showTutorial();
     }
 }

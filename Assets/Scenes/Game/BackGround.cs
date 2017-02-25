@@ -21,9 +21,8 @@ public class BackGround : Entity
 
         total = section - change;
 
-        GameMgr gameMgr = FindObjectOfType<GameMgr>();
-        gameMgr.onScroll += scroll;
-        gameMgr.onGameOver += gameOver;
+        GameMgr.instance.onScroll += scroll;
+        GameMgr.instance.onGameOver += gameOver;
     }
 
     private void scroll( float distance )

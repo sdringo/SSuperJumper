@@ -13,6 +13,9 @@ public class LaunchPlatform : Entity
 
         initPos = transform.position;
         isScroll = true;
+
+        GameMgr.instance.onGameOver += reset;
+        GameMgr.instance.onScroll += scroll;
     }
 
     public void scroll( float distance )
