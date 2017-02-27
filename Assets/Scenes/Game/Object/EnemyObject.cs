@@ -6,7 +6,7 @@ public class EnemyObject : BaseObject
 {
     private void OnTriggerEnter2D( Collider2D other )
     {
-        if( other.name.Equals( "Player" ) ) {
+        if( other.tag.Equals( "Player" ) ) {
             onOutBounds( this );
 
             Player player = other.GetComponent<Player>();

@@ -11,24 +11,30 @@ public class UIGame : Entity
     public Text life = null;
     public Text score = null;
 
+    private GameMgr gameMgr = null;
     private Player player = null;
-
-    public override void initialize()
+    
+    public void setup( GameMgr mgr )
     {
-        base.initialize();
+        gameMgr = mgr;
+        if( !gameMgr )
+            return;
 
-        GameMgr.instance.onGameStart += show;
-        GameMgr.instance.onGameOver += hide;
-        GameMgr.instance.onScroll += scroll;
-        GameMgr.instance.onGameRestart += reset;
+        gameMgr.onGameStart += show;
+        gameMgr.onGameOver += hide;
+        gameMgr.onScroll += scroll;
+        gameMgr.onGameRestart += reset;
 
-        player = GameObject.FindWithTag( "Player" ).GetComponent<Player>();
+        player = gameMgr.Player;
+
+        GetComponent<UIProgressBar>().setup( gameMgr );
+        GetComponent<UIProgressBar>().skinChange( player );
 
         if( progressEn )
             progressEn.anchoredPosition = new Vector2( 0, 20 );
 
         if( life )
-            life.text = GameMgr.instance.Life.ToString();
+            life.text = gameMgr.Life.ToString();
 
         gameObject.SetActive( false );
     }
@@ -57,6 +63,6 @@ public class UIGame : Entity
 
     private void reset()
     {
-        life.text = GameMgr.instance.Life.ToString();
+        life.text = gameMgr.Life.ToString();
     }
 }

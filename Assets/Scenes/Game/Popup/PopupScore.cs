@@ -9,18 +9,27 @@ public class PopupScore : Entity
     public Text textScore;
     public Text textBest;
 
-    private bool isBest = false;
+    private GameMgr gameMgr = null;
 
-    public override void initialize()
+    public void setup( GameMgr mgr )
     {
-        base.initialize();
+        gameMgr = mgr;
+        if( !gameMgr )
+            return;
 
+        textScore.text = string.Format( "{0}", (int)gameMgr.Score );
+
+        bool isBest = gameMgr.BestScore < gameMgr.Score;
         if( isBest ) {
-            icon.anchoredPosition = new Vector2( -70, -260 );
-            score.anchoredPosition = new Vector2( -160, -267 );
+            gameMgr.BestScore = gameMgr.Score;
+
+            icon.anchoredPosition = new Vector2( -160, -267 );
+            score.anchoredPosition = new Vector2( -70, -260 );
         } else {
-            icon.anchoredPosition = new Vector2( 20, -260 );
-            score.anchoredPosition = new Vector2( -65, -267 );
+            icon.anchoredPosition = new Vector2( -65, -267 );
+            score.anchoredPosition = new Vector2( 20, -260 );
+
+            textBest.text = gameMgr.BestScore.ToString();
         }
     }
 
@@ -36,7 +45,8 @@ public class PopupScore : Entity
 
     public void onReturn()
     {
-        GameMgr.instance.gameOver();
+        if( gameMgr )
+            gameMgr.gameOver();
 
         Destroy( this.gameObject );
     }

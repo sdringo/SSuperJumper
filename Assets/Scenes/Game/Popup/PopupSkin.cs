@@ -21,11 +21,11 @@ public class PopupSkin : Entity
 
     public void onOk()
     {
-        Destroy( this.gameObject );
+        Destroy( gameObject );
     }
 
     public void onCancel()
     {
-        Destroy( this.gameObject );
+        Destroy( gameObject );
     }
 }

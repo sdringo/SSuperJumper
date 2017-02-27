@@ -76,7 +76,7 @@ public class Player : Entity
 
     private void OnTriggerEnter2D( Collider2D other )
     {
-        if( other.name.Contains( "ShieldObject" ) || other.name.Contains( "JumpObject" ) ) {
+        if( other.name.Contains( "Shield" ) || other.name.Contains( "Jump" ) ) {
             hittedItem = other.GetComponent<BaseObject>();
         }
     }

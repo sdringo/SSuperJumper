@@ -5,6 +5,8 @@ public class BaseObject : Entity
 {
     public Action<BaseObject> onOutBounds;
 
+    public float percent = 0.1f;
+
     public override void initialize()
     {
         base.initialize();

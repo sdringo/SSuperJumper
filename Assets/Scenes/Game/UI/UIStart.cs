@@ -8,12 +8,11 @@ public class UIStart : Entity
 {
     public Text tap;
 
+    private GameMgr gameMgr = null;
+
     public override void initialize()
     {
         base.initialize();
-
-        GameMgr.instance.onGameStart += hide;
-        GameMgr.instance.onGameOver += show;
 
         if( tap ) {
             Sequence blink = DOTween.Sequence();
@@ -22,6 +21,22 @@ public class UIStart : Entity
             blink.Append( tap.DOFade( 1, 0 ) );
             blink.SetLoops( -1, LoopType.Yoyo );
         }
+    }
+
+    public void setup( GameMgr mgr )
+    {
+        gameMgr = mgr;
+        if( !gameMgr )
+            return;
+
+        gameMgr.onGameStart += hide;
+        gameMgr.onGameOver += show;
+    }
+
+    public void start()
+    {
+        if( gameMgr )
+            gameMgr.gameStart();
     }
 
     public void show()
@@ -34,8 +49,13 @@ public class UIStart : Entity
         gameObject.SetActive( false );
     }
 
-    public void onTutorial()
+    public void showSkin()
     {
-        PopupMgr.instance.showTutorial();
+        gameMgr.showUI( "Prefabs/Popup/Skin" );
+    }
+
+    public void showTutorial()
+    {
+        gameMgr.showUI( "Prefabs/Popup/Tutorial" );
     }
 }
