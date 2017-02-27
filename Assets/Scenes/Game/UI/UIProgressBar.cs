@@ -19,20 +19,12 @@ public class UIProgressBar : Entity
 
     private Player player = null;
 
-    public override void initialize()
+    public void setup( GameMgr mgr )
     {
-        base.initialize();
-
-        player = FindObjectOfType<Player>();
-        player.onJumpEnChange += jumpEnChange;
-        player.onShieldEnChange += shieldEnChange;
-        player.onSuperJumpBegin += superJumpBegin;
-        player.onSuperJumpEnd += superJumpEnd;
+        mgr.onSkinChanged += skinChange;
 
         imgJump = jump.GetComponent<Image>();
-        imgJump.fillAmount = player.JumpEN / player.maxEn;
         imgShield = shield.GetComponent<Image>();
-        imgShield.fillAmount = player.ShieldEN / player.maxEn;
         imgSuper = super.GetComponent<Image>();
         width = imgJump.preferredWidth;
 
@@ -40,6 +32,18 @@ public class UIProgressBar : Entity
         rectJump.anchoredPosition = new Vector2( -width * ( 1.0f - imgJump.fillAmount ), 0 );
         rectSheild = shield.transform.GetChild( 0 ).GetComponent<RectTransform>();
         rectSheild.anchoredPosition = new Vector2( width * ( 1.0f - imgShield.fillAmount ), 0 );
+    }
+
+    public void skinChange( Player newPlayer )
+    {
+        player = newPlayer;
+        player.onJumpEnChange += jumpEnChange;
+        player.onShieldEnChange += shieldEnChange;
+        player.onSuperJumpBegin += superJumpBegin;
+        player.onSuperJumpEnd += superJumpEnd;
+
+        imgJump.fillAmount = player.JumpEN / player.maxEn;
+        imgShield.fillAmount = player.ShieldEN / player.maxEn;
     }
 
     public void jumpEnChange()

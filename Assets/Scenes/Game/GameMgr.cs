@@ -5,27 +5,23 @@ using DG.Tweening;
 
 public class GameMgr : SingletonObject<GameMgr>
 {
+    public GameObject canvas;
+
+    public static Bounds ScreenBounds { get; set; }
+    public static Bounds OutBounds { get; set; }
+
     public Action onGameStart;
     public Action onGameResume;
     public Action onGamePause;
     public Action onGameOver;
     public Action onGameRestart;
     public Action<float> onScroll;
-
-    public static Bounds ScreenBounds { get; set; }
-    public static Bounds OutBounds { get; set; }
-
-    public float respwanDistance = 10.0f;
-    public List<BaseObject> respwans = new List<BaseObject>();
+    public Action<Player> onSkinChanged;
 
     public float Score { get; set; }
+    public float BestScore { get; set; }
     public int Life { get; set; }
-
-    private Player player = null;
-
-    private List<BaseObject> objects = new List<BaseObject>();
-    private int lastRespwan = 0;
-    private Vector3 respwarnPos = Vector3.zero;
+    public Player Player { get; set; }
 
     public override void initialize()
     {
@@ -39,19 +35,20 @@ public class GameMgr : SingletonObject<GameMgr>
         ScreenBounds = new Bounds( Vector3.zero, size );
         OutBounds = new Bounds( Vector3.zero, size * 1.5f );
 
-        player = FindObjectOfType<Player>();
-        player.onScroll += scroll;
-        player.onPlayerDead += playerDead;
-        player.ready();
-        
-        onGameStart += player.start;
-        onGamePause += player.pause;
-        onGameResume += player.resume;
-
         Score = 0.0f;
         Life = 2;
-        lastRespwan = 0;
-        respwarnPos.y = Camera.main.orthographicSize * 1.1f;
+
+        playerChange();
+
+        GetComponent<ObjectRespwan>().setup( this );
+
+        createPrefab( "Prefabs/Bg/BackGround" ).GetComponent<BackGround>().setup( this );
+        createPrefab( "Prefabs/Bg/LaunchPlatform" ).GetComponent<LaunchPlatform>().setup( this );
+
+        showUI( "Prefabs/UI/UIStart" ).GetComponent<UIStart>().setup( this );
+        showUI( "Prefabs/UI/UIGame" ).GetComponent<UIGame>().setup( this );
+        showUI( "Prefabs/UI/UIMenu" ).GetComponent<UIMenu>().setup( this );
+        showUI( "Prefabs/UI/UICount" );
     }
 
     public override void update()
@@ -63,8 +60,43 @@ public class GameMgr : SingletonObject<GameMgr>
         }
     }
 
+    public void onTouchBegan()
+    {
+        if( Player )
+            Player.onTouchBegan();
+    }
+
+    public void onTouchEnd()
+    {
+        if( Player )
+            Player.onTouchEnd();
+    }
+
+    public GameObject showUI( string path )
+    {
+        return showUI( Resources.Load<GameObject>( path ) );
+    }
+
+    public GameObject showUI( GameObject prefab )
+    {
+        return Instantiate( prefab, canvas.transform, false );
+    }
+
+    public GameObject createPrefab( string path )
+    {
+        return createPrefab( Resources.Load<GameObject>( path ) );
+    }
+
+    public GameObject createPrefab( GameObject prefab )
+    {
+        return Instantiate( prefab, gameObject.transform, false );
+    }
+
     public void gameStart()
     {
+        if( Player )
+            Player.start();
+
         onGameStart();
     }
 
@@ -72,90 +104,69 @@ public class GameMgr : SingletonObject<GameMgr>
     {
         pause();
 
-        onGamePause();
+        if( Player )
+            Player.pause();
+
+        //onGamePause();
     }
 
     public void gameResume()
     {
         resume();
 
-        onGameResume();
+        if( Player )
+            Player.resume();
+
+        //onGameResume();
     }
 
     public void gameOver()
     {
-        resume();
-
-        if( player )
-            player.ready();
-
-        foreach( BaseObject obj in objects ) {
-            onScroll -= obj.scroll;
-
-            GameObject.DestroyObject( obj.gameObject );
-        }
-
-        objects.Clear();
-        lastRespwan = 0;
+        if( Player )
+            Player.ready();
 
         Score = 0.0f;
         Life = 2;
 
-        onGameResume();
         onGameOver();
     }
 
     public void gameRestart()
     {
-        resume();
-
         Life--;
 
-        if( player ) {
-            player.ready();
-            player.start();
+        if( Player ) {
+            Player.ready();
+            Player.start();
         }
 
-        onGameResume();
         onGameRestart();
     }
 
     private void scroll( float distance )
     {
-        onScroll( distance );
-
         Score += distance;
 
-        int current = (int)( Score / respwanDistance );
-        if( lastRespwan < current ) {
-            lastRespwan = current;
+        onScroll( distance );
+    }
 
-            int index = UnityEngine.Random.Range( 0, respwans.Count );
+    private void playerChange()
+    {
+        if( Player )
+            DestroyObject( Player.gameObject );
 
-            BaseObject obj = Instantiate<BaseObject>( respwans[index] );
-            obj.transform.Translate( respwarnPos );
-            obj.onOutBounds = onOutBounds;
-            onScroll += obj.scroll;
+        Player = Instantiate( Resources.Load<GameObject>( "Prefabs/Player/Jay" ) ).GetComponent<Player>();
+        Player.onScroll += scroll;
+        Player.onPlayerDead += playerDead;
+        Player.ready();
+        attach( Player.gameObject );
 
-            objects.Add( obj );
-        }
+        if( null != onSkinChanged )
+            onSkinChanged( Player );
     }
 
     private void playerDead()
     {
-        pause();
-
-        onGamePause();
-
-        PopupMgr.instance.showContinue();
-    }
-
-    public void onOutBounds( BaseObject obj )
-    {
-        onScroll -= obj.scroll;
-
-        objects.Remove( obj );
-
-        GameObject.DestroyObject( obj.gameObject );
+        showUI( "Prefabs/Popup/Continue" ).GetComponent<PopupContinue>().setup( this );
     }
 }

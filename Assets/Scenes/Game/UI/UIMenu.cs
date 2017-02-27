@@ -7,14 +7,17 @@ public class UIMenu : Entity
     public GameObject objResume;
     public GameObject objPause;
 
+    private GameMgr gameMgr = null;
     private bool inGame = false;
 
-    public override void initialize()
+    public void setup( GameMgr mgr )
     {
-        base.initialize();
+        gameMgr = mgr;
+        if( !gameMgr )
+            return;
 
-        GameMgr.instance.onGameStart += gameStart;
-        GameMgr.instance.onGameOver += gameMenu;
+        gameMgr.onGameStart += gameStart;
+        gameMgr.onGameOver += gameMenu;
 
         gameMenu();
     }
@@ -22,15 +25,25 @@ public class UIMenu : Entity
     public void onMenu()
     {
         if( inGame ) {
-            if( GameMgr.instance.isPaused ) {
-                GameMgr.instance.gameResume();
-                gameResume();
+            if( gameMgr.isPaused ) {
+                gameMgr.gameResume();
+
+                if( objResume )
+                    objResume.SetActive( false );
+
+                if( objPause )
+                    objPause.SetActive( true );
             } else {
-                GameMgr.instance.gamePause();
-                gamePause();
+                gameMgr.gamePause();
+
+                if( objResume )
+                    objResume.SetActive( true );
+
+                if( objPause )
+                    objPause.SetActive( false );
             }
         } else {
-            PopupMgr.instance.showMenu();
+            gameMgr.showUI( "Prefabs/Popup/Menu" );
         }
     }
 
@@ -60,23 +73,5 @@ public class UIMenu : Entity
 
         if( objPause )
             objPause.SetActive( true );
-    }
-
-    public void gameResume()
-    {
-        if( objResume )
-            objResume.SetActive( false );
-
-        if( objPause )
-            objPause.SetActive( true );
-    }
-
-    public void gamePause()
-    {
-        if( objResume )
-            objResume.SetActive( true );
-
-        if( objPause )
-            objPause.SetActive( false );
     }
 }

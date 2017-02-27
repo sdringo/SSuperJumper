@@ -6,16 +6,20 @@ public class PlayerDead : PlayerState
     {
         base.onEnter( owner );
 
-        owner.Gravity = Vector3.zero;
-        owner.Velocity = Vector3.zero;
+        owner.Velocity = owner.Gravity;
         owner.onPlayerDead();
 
         Animator ani = owner.GetComponent<Animator>();
         ani.SetTrigger( "Dead" );
     }
 
-    public override void onClick()
+    public override void onUpdate( Player owner )
     {
-        base.onClick();
+        base.onUpdate( owner );
+
+        if( owner.transform.position.y < GameMgr.OutBounds.min.y ) {
+            owner.Gravity = Vector3.zero;
+            owner.Velocity = Vector3.zero;
+        }
     }
 }
