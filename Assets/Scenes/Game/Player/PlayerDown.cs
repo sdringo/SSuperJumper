@@ -40,7 +40,7 @@ public class PlayerDown : PlayerState
         if( charge ) {
             base.onTouchEnd();
 
-            owner.jump( power * 1.2f );
+            owner.jump( power * 2.0f );
         }   
     }
 

@@ -147,8 +147,8 @@ public class Player : Entity
 
     public void ready()
     {
-        ShieldEN = 300;
-        JumpEN = 300;
+        ShieldEN = 400;
+        JumpEN = 400;
         Distance = 0;
         
         transform.position = new Vector3( 0, GameMgr.ScreenBounds.min.y * 0.5f, 0 );
@@ -194,8 +194,8 @@ public class Player : Entity
         maxSpeed = prevMax;
 
         Shield = false;
-        JumpEN = maxEn * 0.25f;
-        ShieldEN = maxEn * 0.25f;
+        JumpEN = JumpEN * 0.75f;
+        ShieldEN = ShieldEN * 0.75f;
 
         changeState( new PlayerDown() );
 

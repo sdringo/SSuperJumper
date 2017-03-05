@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GameMgr : SingletonObject<GameMgr>
+public class GameMgr : Entity
 {
     public GameObject canvas;
 
@@ -26,9 +25,7 @@ public class GameMgr : SingletonObject<GameMgr>
     public override void initialize()
     {
         base.initialize();
-
-        DOTween.Init( false, true, LogBehaviour.ErrorsOnly );
-
+        
         Vector3 size = Vector2.zero;
         size.y = Camera.main.orthographicSize * 2.0f;
         size.x = size.y * Screen.width / Screen.height;
@@ -49,15 +46,6 @@ public class GameMgr : SingletonObject<GameMgr>
         showUI( "Prefabs/UI/UIGame" ).GetComponent<UIGame>().setup( this );
         showUI( "Prefabs/UI/UIMenu" ).GetComponent<UIMenu>().setup( this );
         showUI( "Prefabs/UI/UICount" );
-    }
-
-    public override void update()
-    {
-        base.update();
-
-        if( Input.GetKey( KeyCode.Escape ) ) {
-            Application.Quit();
-        }
     }
 
     public void onTouchBegan()
