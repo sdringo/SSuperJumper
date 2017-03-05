@@ -51,9 +51,9 @@ public class ObjectRespwan : Entity
         last = 0;
     }
 
-    private void scroll( float distance )
+    private void scroll( float offset )
     {
-        total += distance;
+        total += offset;
         if( last < total ) {
             last = total + Well512.Next( respwanMin, respwanMax );
 

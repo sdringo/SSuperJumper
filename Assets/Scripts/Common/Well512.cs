@@ -14,6 +14,11 @@ public class Well512
         }
     }
 
+    public static float Rand()
+    {
+        return (float)Next() / (float)( uint.MaxValue );
+    }
+
     internal static uint Next( uint minValue, uint maxValue )
     {
         return ( ( Next() % ( maxValue - minValue ) ) + minValue );

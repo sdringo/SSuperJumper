@@ -24,11 +24,13 @@ public class BackGround : Entity
 
         mgr.onScroll += scroll;
         mgr.onGameOver += gameOver;
+
+        GetComponent<BgRespwan>().setup( mgr );
     }
 
-    private void scroll( float distance )
+    private void scroll( float offset )
     {
-        total += distance;
+        total += offset;
 
         if( section - change < total % section ) {
             changing = true;

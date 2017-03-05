@@ -55,7 +55,7 @@ public class UIGame : Entity
         gameObject.SetActive( false );
     }
 
-    private void scroll( float distance )
+    private void scroll( float offset )
     {
         if( score )
             score.text = string.Format( "{0}", (int)player.Distance );

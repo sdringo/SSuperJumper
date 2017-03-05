@@ -5,6 +5,7 @@ public class Entity : MonoBehaviour, IEntity
     public bool isPaused { get { return paused; } }
 
     protected bool paused = false;
+    protected Bounds bounds;
 
     #region
     protected virtual void Awake()
@@ -55,6 +56,16 @@ public class Entity : MonoBehaviour, IEntity
     }
     #endregion
 
+    public void pause()
+    {
+        paused = true;
+    }
+
+    public void resume()
+    {
+        paused = false;
+    }
+
     public void attach( GameObject child )
     {
         if( null == child )
@@ -75,15 +86,5 @@ public class Entity : MonoBehaviour, IEntity
         Transform child = transform.FindChild( name );
         if( child )
             child.parent = null;
-    }
-
-    public void pause()
-    {
-        paused = true;
-    }
-
-    public void resume()
-    {
-        paused = false;
     }
 }

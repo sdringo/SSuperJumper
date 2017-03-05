@@ -131,11 +131,11 @@ public class GameMgr : Entity
         onGameRestart();
     }
 
-    private void scroll( float distance )
+    private void scroll( float offset )
     {
-        Score += distance;
+        Score += offset;
 
-        onScroll( distance );
+        onScroll( offset );
     }
 
     private void playerChange()

@@ -19,10 +19,10 @@ public class LaunchPlatform : Entity
         mgr.onScroll += scroll;
     }
 
-    public void scroll( float distance )
+    public void scroll( float offset )
     {
         if( isScroll ) {
-            transform.Translate( 0, -distance, 0 );
+            transform.Translate( 0, -offset, 0 );
             if( transform.position.y < GameMgr.OutBounds.min.y )
                 isScroll = false;
         }
