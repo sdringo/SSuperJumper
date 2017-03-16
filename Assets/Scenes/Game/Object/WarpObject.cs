@@ -6,6 +6,8 @@ public class WarpObject : BaseObject
 {
     public override void hit( Player player )
     {
+        player.changeState( new PlayerWarp() );
+
         onOutBounds( this );
     }
 }

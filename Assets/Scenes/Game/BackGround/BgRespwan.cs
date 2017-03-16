@@ -25,8 +25,17 @@ public class BgRespwan : Entity
             return;
 
         gameMgr.onScroll += scroll;
-        gameMgr.onGameStart += createComet;
         gameMgr.onGameOver += clear;
+
+        createComet();
+
+        GameObject go = Instantiate<GameObject>( prefabPlanet, gameMgr.transform, false );
+        planets[0] = go.GetComponent<BgPlanet>();
+
+        for( int i = 0; i < 10; ++i ) {
+            go = Instantiate<GameObject>( prefabStars[i % prefabStars.Length], gameMgr.transform, false );
+            stars.Add( go.GetComponent<BgStar>() );
+        }
     }
 
     private void clear()

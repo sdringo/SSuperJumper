@@ -17,10 +17,12 @@ public class GameMgr : Entity
     public Action<float> onScroll;
     public Action<Player> onSkinChanged;
 
+    public Player Player { get; set; }
     public float Score { get; set; }
     public float BestScore { get; set; }
     public int Life { get; set; }
-    public Player Player { get; set; }
+    
+    private ObjectRespwan respwaner = null;
 
     public override void initialize()
     {
@@ -37,7 +39,8 @@ public class GameMgr : Entity
 
         playerChange();
 
-        GetComponent<ObjectRespwan>().setup( this );
+        respwaner = GetComponent<ObjectRespwan>();
+        respwaner.setup( this );
 
         createPrefab( "Prefabs/Bg/BackGround" ).GetComponent<BackGround>().setup( this );
         createPrefab( "Prefabs/Bg/LaunchPlatform" ).GetComponent<LaunchPlatform>().setup( this );
@@ -94,8 +97,6 @@ public class GameMgr : Entity
 
         if( Player )
             Player.pause();
-
-        //onGamePause();
     }
 
     public void gameResume()
@@ -104,8 +105,6 @@ public class GameMgr : Entity
 
         if( Player )
             Player.resume();
-
-        //onGameResume();
     }
 
     public void gameOver()
@@ -134,6 +133,9 @@ public class GameMgr : Entity
     private void scroll( float offset )
     {
         Score += offset;
+
+        if( Score > 10 )
+            respwaner.generate();
 
         onScroll( offset );
     }

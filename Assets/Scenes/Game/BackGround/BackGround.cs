@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BackGround : Entity
 {
@@ -8,48 +9,37 @@ public class BackGround : Entity
     public SpriteRenderer bgDst;
     public List<Sprite> sprites;
 
-    public float section = 100.0f;
-    public float change = 10.0f;
-
-    private float total = 0.0f;
-    private bool changing = false;
-    private int index = 1;
+    private float distance;
+    private float target;
+    private float transition;
+    private float section;
+    private bool first;
+    private int index;
 
     public void setup( GameMgr mgr )
     {
         if( !mgr )
             return;
 
-        total = section - change;
+        distance = 0;
+        target = 10;
+        transition = 0;
+        section = target - transition;
+        first = true;
 
         mgr.onScroll += scroll;
-        mgr.onGameOver += gameOver;
+        mgr.onGameOver += reset;
 
         GetComponent<BgRespwan>().setup( mgr );
     }
 
-    private void scroll( float offset )
+    private void reset()
     {
-        total += offset;
-
-        if( section - change < total % section ) {
-            changing = true;
-
-            float ratio = ( section - total % section ) / change;
-            bgSrc.color = new Color( 1, 1, 1, ratio );
-            bgDst.color = new Color( 1, 1, 1, 1.0f - ratio );
-        } else {
-            if( changing ) {
-                changeBg();
-                changing = false;
-            }
-        }
-    }
-
-    private void gameOver()
-    {
-        total = section - change;
-        index = 1;
+        distance = 0;
+        target = 10;
+        transition = 0;
+        section = target - transition;
+        first = true;
 
         bgSrc.sprite = sprites[0];
         bgSrc.color = Color.white;
@@ -57,16 +47,43 @@ public class BackGround : Entity
         bgDst.color = Color.white;
     }
 
-    private void changeBg()
+    private void scroll( float offset )
     {
-        bgSrc.sprite = bgDst.sprite;
-        bgSrc.color = Color.white;
+        if( first ) {
+            distance += offset;
 
-        index++;
-        if( index > sprites.Count )
-            index = 1;
+            if( distance > transition )
+                bgSrc.color = new Color( 1, 1, 1, 1.0f - Mathf.Min( 1.0f, ( distance - transition ) / section ) );
 
-        bgDst.sprite = sprites[index];
-        bgDst.color = Color.white;
+            if( distance > target ) {
+                index = 2;
+
+                bgSrc.sprite = bgDst.sprite;
+                bgSrc.color = Color.white;
+                bgDst.sprite = sprites[index];
+                bgDst.color = Color.white;
+
+                first = false;
+            }
+        }
+    }
+
+    public void warp( float duration )
+    {
+        int loop = sprites.Count - 1;
+
+        Debug.Log( "loop = " + loop );
+
+        DOTween.Sequence().Append( bgSrc.DOColor( new Color( 1, 1, 1, 0 ), duration / loop ) ).AppendCallback( () => {
+            bgSrc.sprite = bgDst.sprite;
+            bgSrc.color = Color.white;
+
+            index = ++index == sprites.Count ? 1 : index;
+
+            Debug.Log( "index = " + index );
+
+            bgDst.sprite = sprites[index];
+            bgDst.color = Color.white;
+        } ).SetLoops( loop );
     }
 }

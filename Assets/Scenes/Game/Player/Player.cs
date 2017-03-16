@@ -18,15 +18,19 @@ public class Player : Entity
     public Action onSuperJumpBegin;
     public Action onSuperJumpEnd;
     public Action onPlayerDead;
+    public Action onWarpBegin;
+    public Action onWarpEnd;
+    public Action onBlackHoleBegin;
+    public Action onBlackHoleEnd;
 
-    public float jumpSpeed = 3.3f;
-    public float downSpeed = 1.5f;
-    public float maxSpeed = 10.0f;
-    public float minSpeed = -5.0f;
-    public float reqShield = 10;
-    public float reqJump = 10;
-    public float maxEn = 1000;
-    public float superTime = 5.0f;
+    public float jumpSpeed = 8;
+    public float downSpeed = 5;
+    public float maxSpeed = 13;
+    public float minSpeed = -10;
+    public float reqShield = 135;
+    public float reqJump = 115;
+    public float maxEn = 10000;
+    public float superTime = 5;
 
     public Vector3 Velocity { get; set; }
     public Vector3 Gravity { get; set; }
@@ -38,20 +42,14 @@ public class Player : Entity
     protected PlayerState prev = null;
     protected PlayerState curr = null;
 
-    private BaseObject hittedItem = null;
+    private BaseObject hitted = null;
     private float shieldEn = 0.0f;
     private float jumpEn = 0.0f;
-    private float prevMax = 0.0f;
 
     private bool touchBegan = false;
     private bool touchEnd = false;
     private float touchTime = 0.0f;
-    private float holdThreshold = 0.15f;
-
-    public override void initialize()
-    {
-        base.initialize();
-    }
+    private float holdThreshold = 0.125f;
 
     public override void updateFixed()
     {
@@ -76,18 +74,18 @@ public class Player : Entity
 
     private void OnTriggerEnter2D( Collider2D other )
     {
-        if( other.name.Contains( "Shield" ) || other.name.Contains( "Jump" ) ) {
-            hittedItem = other.GetComponent<BaseObject>();
+        if( other.name.Contains( "Shield" ) || other.name.Contains( "Jump" ) || other.name.Contains( "Warp" ) || other.name.Contains( "BlackHole" ) ) {
+            hitted = other.GetComponent<BaseObject>();
         }
     }
 
     private void OnTriggerExit2D( Collider2D other )
     {
-        if( !hittedItem )
+        if( !hitted )
             return;
 
-        if( hittedItem.name.Equals( other.name ) ) {
-            hittedItem = null;
+        if( hitted.name.Equals( other.name ) ) {
+            hitted = null;
         }   
     }
 
@@ -137,11 +135,11 @@ public class Player : Entity
 
     public void checkItem()
     {
-        if( hittedItem ) {
-            hittedItem.hit( this );
+        if( hitted ) {
+            hitted.hit( this );
 
             if( JumpEN + ShieldEN > maxEn )
-                superJumpBegin();
+                changeState( new PlayerSuper() );
         }
     }
 
@@ -169,37 +167,9 @@ public class Player : Entity
         changeState( new PlayerJump() );
     }
 
-    public void superJumpBegin()
+    public void blackhole()
     {
-        Gravity = Vector2.zero;
-        Velocity = Vector2.up * maxSpeed * 1.3f;
-        Shield = true;
 
-        prevMax = maxSpeed;
-        maxSpeed = prevMax * 2;
-
-        changeState( new PlayerSuper() );
-
-        onSuperJumpBegin();
-
-        Sequence seq = DOTween.Sequence();
-        seq.AppendInterval( superTime );
-        seq.AppendCallback( () => {
-            Gravity = Vector2.down * downSpeed;
-        } );
-    }
-
-    public void superJumpEnd()
-    {
-        maxSpeed = prevMax;
-
-        Shield = false;
-        JumpEN = JumpEN * 0.75f;
-        ShieldEN = ShieldEN * 0.75f;
-
-        changeState( new PlayerDown() );
-
-        onSuperJumpEnd();
     }
 
     public void dead()
