@@ -21,7 +21,7 @@ public class BaseObject : Entity
             onOutBounds( this );
     }
 
-    public virtual void hit( Player player )
+    public virtual void apply( Player player )
     {
         
     }

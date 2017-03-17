@@ -49,4 +49,9 @@ public class PlayerWarp : PlayerState
         if( bg )
             bg.warp( time );
     }
+
+    public override void onAcquireItem( BaseObject item )
+    {
+
+    }
 }

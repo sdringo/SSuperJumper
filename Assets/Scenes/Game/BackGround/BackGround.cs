@@ -70,7 +70,7 @@ public class BackGround : Entity
 
     public void warp( float duration )
     {
-        int loop = sprites.Count - 1;
+        int loop = (sprites.Count - 1) * 2;
 
         DOTween.Sequence().Append( bgSrc.DOColor( new Color( 1, 1, 1, 0 ), duration / loop ) ).AppendCallback( () => {
             bgSrc.sprite = bgDst.sprite;

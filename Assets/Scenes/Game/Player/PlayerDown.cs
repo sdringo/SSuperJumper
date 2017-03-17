@@ -25,29 +25,29 @@ public class PlayerDown : PlayerState
         }
     }
 
-    public override void onTouchBegan()
+    public override void onCharge()
     {
-        if( 0 < owner.JumpEN ) {
-            base.onTouchBegan();
+        base.onCharge();
 
+        if( 0 < owner.JumpEN ) {
             Animator ani = owner.GetComponent<Animator>();
             ani.SetTrigger( "Charge" );
         }
     }
 
-    public override void onTouchEnd()
+    public override void onTouchUp()
     {
-        if( charge ) {
-            base.onTouchEnd();
+        base.onTouchUp();
 
+        if( 0 < power.y )
             owner.jump( power * 2.0f );
-        }   
     }
 
-    public override void onClick()
+    public override void onChargeCancel()
     {
-        base.onClick();
+        base.onChargeCancel();
 
-        owner.checkItem();
+        Animator ani = owner.GetComponent<Animator>();
+        ani.SetTrigger( "Down" );
     }
 }

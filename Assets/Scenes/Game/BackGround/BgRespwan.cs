@@ -71,7 +71,7 @@ public class BgRespwan : Entity
             if( !planets[i] )
                 continue;
 
-            planets[i].scroll( offset );
+            planets[i].scroll( offset * 0.3f );
             if( planets[i].checkOutBounds() ) {
                 Destroy( planets[i].gameObject );
                 planets[i] = null;

@@ -46,16 +46,16 @@ public class Player : Entity
     private float shieldEn = 0.0f;
     private float jumpEn = 0.0f;
 
-    private bool touchBegan = false;
-    private bool touchEnd = false;
-    private float touchTime = 0.0f;
-    private float holdThreshold = 0.125f;
+    //private bool touchBegan = false;
+    //private bool touchEnd = false;
+    //private float touchTime = 0.0f;
+    //private float holdThreshold = 0.125f;
 
     public override void updateFixed()
     {
         base.updateFixed();
 
-        processTouch();
+        //processTouch();
 
         if( null != curr )
             curr.onUpdate( this );
@@ -72,47 +72,44 @@ public class Player : Entity
         }
     }
 
-    private void OnTriggerEnter2D( Collider2D other )
+    private BaseObject raycastItem()
     {
-        if( other.name.Contains( "Shield" ) || other.name.Contains( "Jump" ) || other.name.Contains( "Warp" ) || other.name.Contains( "BlackHole" ) ) {
-            hitted = other.GetComponent<BaseObject>();
-        }
-    }
-
-    private void OnTriggerExit2D( Collider2D other )
-    {
-        if( !hitted )
-            return;
-
-        if( hitted.name.Equals( other.name ) ) {
-            hitted = null;
-        }   
-    }
-
-    private void processTouch()
-    {
-        if( touchBegan ) {
-            touchTime += Time.fixedDeltaTime;
-
-            if( holdThreshold < touchTime ) {
-                touchBegan = false;
-
-                if( null != curr )
-                    curr.onTouchBegan();
-            }
+        Collider2D[] result = Physics2D.OverlapCircleAll( transform.position, 0.63f );
+        foreach( Collider2D collider in result ) {
+            if( collider.name.StartsWith( "Item" ) )
+                return collider.GetComponent<BaseObject>();
         }
 
-        if( touchEnd ) {
-            if( holdThreshold < touchTime ) {
-                if( null != curr )
-                    curr.onTouchEnd();
+        return null;
+    }
+
+    public void onTouchBegan()
+    {
+        hitted = raycastItem();
+
+        if( null != curr )
+            curr.onTouchDown();
+    }
+
+    public void onTouchEnd()
+    {
+        if( hitted ) {
+            BaseObject result = raycastItem();
+
+            if( null != result && hitted.name.Equals( result.name ) ) {
+                curr.onAcquireItem( hitted );
+
+                if( JumpEN + ShieldEN > maxEn )
+                    changeState( new PlayerSuper() );
+                else
+                    curr.onChargeCancel();
             } else {
-                if( null != curr )
-                    curr.onClick();
+                curr.onTouchUp();
             }
 
-            touchBegan = false;
-            touchEnd = false;
+            hitted = null;
+        } else {
+            curr.onTouchUp();
         }
     }
 
@@ -133,22 +130,12 @@ public class Player : Entity
         curr.onEnter( this );
     }
 
-    public void checkItem()
-    {
-        if( hitted ) {
-            hitted.hit( this );
-
-            if( JumpEN + ShieldEN > maxEn )
-                changeState( new PlayerSuper() );
-        }
-    }
-
     public void ready()
     {
         ShieldEN = maxEn * 0.3f;
         JumpEN = maxEn * 0.5f;
         Distance = 0;
-        
+
         transform.position = new Vector3( 0, GameMgr.ScreenBounds.min.y * 0.5f, 0 );
 
         changeState( new PlayerIdle() );
@@ -175,17 +162,5 @@ public class Player : Entity
     public void dead()
     {
         changeState( new PlayerDead() );
-    }
-
-    public void onTouchBegan()
-    {
-        touchBegan = true;
-        touchTime = 0.0f;
-    }
-
-    public void onTouchEnd()
-    {
-        touchBegan = false;
-        touchEnd = true;
     }
 }

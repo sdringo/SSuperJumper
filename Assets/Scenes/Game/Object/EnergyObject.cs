@@ -6,7 +6,7 @@ public class EnergyObject : BaseObject
 {
     public float Amout = 10;
 
-    public override void hit( Player player )
+    public override void apply( Player player )
     {
         player.ShieldEN += Amout;
 

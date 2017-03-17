@@ -38,4 +38,9 @@ public class PlayerSuper : PlayerState
             owner.onSuperJumpEnd();
         }
     }
+
+    public override void onAcquireItem( BaseObject item )
+    {
+        
+    }
 }

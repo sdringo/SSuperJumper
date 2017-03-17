@@ -31,9 +31,9 @@ public class PlayerJump : PlayerState
         }
     }
 
-    public override void onTouchBegan()
+    public override void onTouchDown()
     {
-        base.onTouchBegan();
+        base.onTouchDown();
 
         if( 0 < owner.ShieldEN ) {
             owner.Shield = true;
@@ -43,22 +43,27 @@ public class PlayerJump : PlayerState
         }
     }
 
-    public override void onTouchEnd()
+    public override void onTouchUp()
     {
-        base.onTouchEnd();
+        base.onTouchUp();
 
         if( owner.Shield ) {
+            owner.Shield = false;
+
             Animator ani = owner.GetComponent<Animator>();
             ani.SetTrigger( "Jump" );
         }
-
-        owner.Shield = false;
     }
 
-    public override void onClick()
+    public override void onChargeCancel()
     {
-        base.onClick();
+        base.onChargeCancel();
 
-        owner.checkItem();
+        if( owner.Shield ) {
+            owner.Shield = false;
+
+            Animator ani = owner.GetComponent<Animator>();
+            ani.SetTrigger( "Jump" );
+        }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WarpObject : BaseObject
 {
-    public override void hit( Player player )
+    public override void apply( Player player )
     {
         player.changeState( new PlayerWarp() );
 
