@@ -27,6 +27,7 @@ public class PlayerWarp : PlayerState
         owner.Velocity = Vector3.zero;
         owner.Gravity = Vector3.zero;
         owner.transform.position = Vector3.zero;
+        owner.Shield = true;
 
         Animator ani = owner.GetComponent<Animator>();
         ani.SetTrigger( "Super" );
@@ -39,6 +40,7 @@ public class PlayerWarp : PlayerState
             owner.Distance += offset;
             owner.onScroll( offset );
         } ).OnComplete( () => {
+            owner.Shield = false;
             owner.Gravity = Vector2.down * owner.downSpeed;
             owner.changeState( new PlayerDown() );
         } );

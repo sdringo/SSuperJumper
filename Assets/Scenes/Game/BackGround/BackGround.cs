@@ -72,15 +72,11 @@ public class BackGround : Entity
     {
         int loop = sprites.Count - 1;
 
-        Debug.Log( "loop = " + loop );
-
         DOTween.Sequence().Append( bgSrc.DOColor( new Color( 1, 1, 1, 0 ), duration / loop ) ).AppendCallback( () => {
             bgSrc.sprite = bgDst.sprite;
             bgSrc.color = Color.white;
 
             index = ++index == sprites.Count ? 1 : index;
-
-            Debug.Log( "index = " + index );
 
             bgDst.sprite = sprites[index];
             bgDst.color = Color.white;
